@@ -39,70 +39,33 @@
     //If Username field is empty
     if([_username isEqual:@""])
     {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Login Status"
-                              message:[NSString stringWithFormat:@"Login Failed: Username is empty"]
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        
-        [alert show];
-
+        [self displayErrorMsg:@"Login Failed: Username is empty"];
         [_username becomeFirstResponder];
     }
     //IF the email address provided is not Valid display alert box
     else if(!match)
     {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Login Status"
-                              message:[NSString stringWithFormat:@"Login Failed: Invalid Email Format. Ex:abc@xyz.com"]
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        
-        [alert show];
+        [self displayErrorMsg:@"Login Failed: Invalid Email Format. Ex:abc@xyz.com"];
         [_username becomeFirstResponder];
         
     }
     //Below code validates given username with database records and if not match show error message
     else if([_username.text isEqualToString:@"Vivek@gmail.com"]==NO)
     {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Login Status"
-                              message:[NSString stringWithFormat:@"Login Failed: Invalid Username"]
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        
-        [alert show];
+        [self displayErrorMsg:@"Login Failed: Invalid Username"];
         [_username becomeFirstResponder];
         
     }
     //IF password field is empty
     else if([_password isEqual:@""])
     {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Login Status"
-                              message:[NSString stringWithFormat:@"Login Failed: Password is empty"]
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        
-        [alert show];
-        
+        [self displayErrorMsg:@"Login Failed: Password is empty"];
         [_password becomeFirstResponder];
     }
     //Below code validates given password with database records and if not match then show error messages
     else if([_password.text isEqualToString:@"Vivek"]==NO)
     {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Login Status"
-                              message:[NSString stringWithFormat:@"Login Failed: Invalid Password"]
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        
-        [alert show];
+        [self displayErrorMsg:@"Login Failed: Invalid Password"];
         [_password becomeFirstResponder];
         
     }
@@ -119,6 +82,19 @@
         //This code will help to navigate from Login Screen to MenuViewController
       [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
     }
+}
+
+-(void)displayErrorMsg:(NSString *)errMsg{
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Error Message"
+                          message:[NSString stringWithFormat:@"%@",errMsg]
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    
+    [alert show];
+    
 }
 
 - (void)viewDidLoad {
