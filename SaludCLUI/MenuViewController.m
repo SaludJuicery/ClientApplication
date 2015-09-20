@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "SWRevealViewController.h"
+#import "CreateMenuController.h"
 
 @interface MenuViewController ()
 
@@ -48,13 +49,23 @@
 }
 - (IBAction)addNewCategory:(id)sender {
     
+    if ([_nCategory.text isEqualToString:@""])
+    {
+        
+        [self displayErrorMsg:@"New Category Name cannot be empty"];
+        [_nCategory becomeFirstResponder];
+    
+    }
+    else
+    {
     // Clean up UI
     [category resignFirstResponder];
     autocompleteTableView.hidden = YES;
     
-    // Add the URL to the list of entered URLS as long as it isn't already there
-    if (![pastCategory containsObject:category.text]) {
-        [pastCategory addObject:category.text];
+        // Add the Category to the list of entered categories as long as it isn't already there
+        if (![pastCategory containsObject:_nCategory.text]) {
+            [pastCategory addObject:_nCategory.text];
+        }
     }
     
 }
@@ -73,6 +84,34 @@
     [autocompleteTableView reloadData];
 }
 
+- (IBAction)checkContinue:(UIButton *)sender {
+    if ([category.text isEqualToString:@""])
+    {
+        [self displayErrorMsg:@"Category Name cannot be empty"];
+        [category becomeFirstResponder];
+        
+    }
+   /* else{
+        //This code will help to navigate from Login Screen to MenuViewController
+        [self performSegueWithIdentifier:@"sw_contmenu" sender: self];
+    }*/
+    
+    
+}
+
+-(void)displayErrorMsg:(NSString *)errMsg{
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Error Message"
+                          message:[NSString stringWithFormat:@"%@",errMsg]
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    
+    [alert show];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -85,7 +124,17 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-       
+
+    
+    CreateMenuController *destViewController = segue.destinationViewController;
+
+    if ([segue.identifier isEqualToString:@"sw_continue"]) {
+        destViewController.tempCat = category.text;
+            }
+    else if ([segue.identifier isEqualToString:@"sw_newmenu"]) {
+       destViewController.itemCat.text = _nCategory.text;
+        
+    }
 }
 
 #pragma mark UITextFieldDelegate methods
