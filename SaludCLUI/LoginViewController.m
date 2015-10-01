@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "PDKeychainBindings.h"
+#import "RemoteLogin.h"
 
 @interface LoginViewController ()
 
@@ -33,54 +34,41 @@
 
 - (IBAction)userLogin:(UIButton *)sender {
     
-    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}" options:NSRegularExpressionCaseInsensitive error:NULL];
-    NSTextCheckingResult *match = [regExp firstMatchInString:_username.text options:0 range:NSMakeRange(0, [_username.text length])];
-    
     //If Username field is empty
     if([_username isEqual:@""])
     {
-        [self displayErrorMsg:@"Login Failed: Username is empty"];
+        [self displayErrorMsg:@"Input Error: Username is empty"];
         [_username becomeFirstResponder];
-    }
-    //IF the email address provided is not Valid display alert box
-    else if(!match)
-    {
-        [self displayErrorMsg:@"Login Failed: Invalid Email Format. Ex:abc@xyz.com"];
-        [_username becomeFirstResponder];
-        
-    }
-    //Below code validates given username with database records and if not match show error message
-    else if([_username.text isEqualToString:@"Vivek@gmail.com"]==NO)
-    {
-        [self displayErrorMsg:@"Login Failed: Invalid Username"];
-        [_username becomeFirstResponder];
-        
     }
     //IF password field is empty
     else if([_password isEqual:@""])
     {
-        [self displayErrorMsg:@"Login Failed: Password is empty"];
+        [self displayErrorMsg:@"Input Error: Password is empty"];
         [_password becomeFirstResponder];
-    }
-    //Below code validates given password with database records and if not match then show error messages
-    else if([_password.text isEqualToString:@"Vivek"]==NO)
-    {
-        [self displayErrorMsg:@"Login Failed: Invalid Password"];
-        [_password becomeFirstResponder];
-        
     }
     //Below code let user navigate to MenuView Controller upon successfull login
     else
     {
-        //How to retrieve username and password
-        //NSString *username = [bindings objectForKey:@"username"];
-        //NSString *password = [bindings objectForKey:@"password"];
+        int res=0;
+        //retrieve username and password
+        NSString *username = _username.text;
+        NSString *password = _password.text;
+        NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/dbLogin";
 
-        //Display the Username and Password
-       // NSLog(@"Username: %@, Password: %@",username,password);
+        RemoteLogin *remote = [[RemoteLogin alloc] init];
+        res = [remote getConnection:username forpass:password forurl:url];
         
-        //This code will help to navigate from Login Screen to MenuViewController
-      [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
+        if(res==1)
+        {
+            //This code will help to navigate from Login Screen to MenuViewController
+            [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
+        }
+        else
+        {
+            [self displayErrorMsg:@"Login Error: Invalid Credentials"];
+            [_username becomeFirstResponder];
+        }
+       
     }
 }
 
