@@ -763,8 +763,8 @@
         <image name="rewards.png" width="97" height="97"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="nLx-uS-fWR"/>
         <segue reference="EM7-fa-iuh"/>
-        <segue reference="k2b-bW-uaG"/>
         <segue reference="SMT-UP-giV"/>
     </inferredMetricsTieBreakers>
 </document>
