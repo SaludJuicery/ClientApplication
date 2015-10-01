@@ -26,7 +26,7 @@ NSArray *menu;
     menu=@[@"menu",@"rewards",@"hours",@"reports",@"logout"];
     
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -45,8 +45,6 @@ NSArray *menu;
     return 1;
 }
 
-//self.revealViewController pushFrontViewController:targetViewController animated:YES;
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
@@ -60,7 +58,7 @@ NSArray *menu;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    // Configure the cell here if you want
     
     return cell;
 }
@@ -69,16 +67,6 @@ NSArray *menu;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    /*if( [segue isKindOfClass: [SWRevealViewControllerSegueSetController class]] ){
-        SWRevealViewControllerSegueSetController *swSegue = (SWRevealViewControllerSegueSetController *) segue;
-        swSegue.performBlock = ^ (SWRevealViewController* rvc_segue, UIViewController* svc, UIViewController* dvc){
-            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
-            [navController setViewControllers:@[dvc] animated: NO];
-            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-        };
-    }*/
-    
     
     // Set the title of navigation bar by using the menu items
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
