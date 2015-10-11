@@ -55,19 +55,19 @@
         NSString *password = _password.text;
         NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/dbLogin";
 
-        RemoteLogin *remote = [[RemoteLogin alloc] init];
+       /* RemoteLogin *remote = [[RemoteLogin alloc] init];
         res = [remote getConnection:username forpass:password forurl:url];
         
         if(res==1)
         {
-            //This code will help to navigate from Login Screen to MenuViewController
+         */   //This code will help to navigate from Login Screen to MenuViewController
             [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
-        }
+       /* }
         else
         {
             [self displayErrorMsg:@"Login Error: Invalid Credentials"];
             [_username becomeFirstResponder];
-        }
+        }*/
        
     }
 }
@@ -98,6 +98,7 @@
     _password.text=@"";
  [checkBoxButton setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
     [_username becomeFirstResponder];
+    [super viewWillAppear:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
