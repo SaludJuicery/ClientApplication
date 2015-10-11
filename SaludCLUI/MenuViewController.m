@@ -66,6 +66,8 @@
         if (![pastCategory containsObject:_nCategory.text]) {
             [pastCategory addObject:_nCategory.text];
         }
+        
+       // [self performSegueWithIdentifier:@"sw_createmenu" sender: self];
     }
     
 }
@@ -91,11 +93,10 @@
         [category becomeFirstResponder];
         
     }
-   /* else{
+    else{
         //This code will help to navigate from Login Screen to MenuViewController
-        [self performSegueWithIdentifier:@"sw_contmenu" sender: self];
-    }*/
-    
+        //[self performSegueWithIdentifier:@"sw_createmenu" sender: self];
+    }
     
 }
 
@@ -125,15 +126,15 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-    
     CreateMenuController *destViewController = segue.destinationViewController;
-
-    if ([segue.identifier isEqualToString:@"sw_continue"]) {
+    
+    if([segue.identifier isEqualToString:@"sw_contmenu"])
+    {
         destViewController.tempCat = category.text;
-            }
-    else if ([segue.identifier isEqualToString:@"sw_newmenu"]) {
-       destViewController.itemCat.text = _nCategory.text;
-        
+    }
+    else if ([segue.identifier isEqualToString:@"sw_newmenu"])
+    {
+       destViewController.tempCat = _nCategory.text;
     }
 }
 
