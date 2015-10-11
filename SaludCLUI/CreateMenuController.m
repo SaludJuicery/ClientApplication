@@ -33,7 +33,7 @@
 {
     int i;
     
-    for(i=1;i<=6;i++)
+    for(i=1;i<=5;i++)
     {
         UITextField *textField=(UITextField *)[self.view viewWithTag:i];
         [textField setText:@""];
@@ -90,9 +90,9 @@
         
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonMenu options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];//This var holds the json object
+        [self displayMessage:@"Menu Created Successfully"];
         NSLog(@"menu:%@", result);
-        
 
     }
 }
