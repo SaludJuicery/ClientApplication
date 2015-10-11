@@ -38,8 +38,8 @@
 
     //If login is failed
     if (errorReturned) {
-        NSLog(@"Error %@",errorReturned.description);
-        return 0;
+       // NSLog(@"Error %@",errorReturned.description);
+        return 1;
     }
     //If login is success
     else
@@ -48,7 +48,7 @@
         NSMutableArray *arrDoctorInfo  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&jsonParsingError];
         
          NSLog(@"Dict %@",arrDoctorInfo);
-         return 1;
+         return 0;
     }
 }
 @end
