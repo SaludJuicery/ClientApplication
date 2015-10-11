@@ -30,6 +30,8 @@
 		E27E909A1B9DFBBE00DCB49D /* Shop Hours.png in Resources */ = {isa = PBXBuildFile; fileRef = E27E908C1B9DFBBE00DCB49D /* Shop Hours.png */; };
 		E2D240501B86189500165274 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D2404F1B86189500165274 /* MenuViewController.m */; };
 		E2D240521B86266800165274 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D240511B86266800165274 /* Main.storyboard */; };
+		E2D381AB1BC178FD00CE0152 /* UpdateMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D381AA1BC178FD00CE0152 /* UpdateMenuController.m */; };
+		E2D381B11BC194A000CE0152 /* BorderGlobalStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D381B01BC194A000CE0152 /* BorderGlobalStyle.m */; };
 		E2D899111B9DE42F00BC5E42 /* ShopHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D899101B9DE42F00BC5E42 /* ShopHoursViewController.m */; };
 		E2D899131B9DE4E200BC5E42 /* ReportsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D899121B9DE4E200BC5E42 /* ReportsViewController.m */; };
 		E2D899151B9DE50A00BC5E42 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D899141B9DE50A00BC5E42 /* NavigationViewController.m */; };
@@ -83,6 +85,10 @@
 		E2D2404E1B86189500165274 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E2D2404F1B86189500165274 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E2D240511B86266800165274 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E2D381A91BC178FD00CE0152 /* UpdateMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateMenuController.h; sourceTree = "<group>"; };
+		E2D381AA1BC178FD00CE0152 /* UpdateMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateMenuController.m; sourceTree = "<group>"; };
+		E2D381AF1BC194A000CE0152 /* BorderGlobalStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderGlobalStyle.h; sourceTree = "<group>"; };
+		E2D381B01BC194A000CE0152 /* BorderGlobalStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderGlobalStyle.m; sourceTree = "<group>"; };
 		E2D8990F1B9DE42F00BC5E42 /* ShopHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopHoursViewController.h; sourceTree = "<group>"; };
 		E2D899101B9DE42F00BC5E42 /* ShopHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopHoursViewController.m; sourceTree = "<group>"; };
 		E2D899121B9DE4E200BC5E42 /* ReportsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportsViewController.m; sourceTree = "<group>"; };
@@ -224,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				E2433D9C1B85613B00E4A3AB /* AppDelegate.h */,
+				E2D381AF1BC194A000CE0152 /* BorderGlobalStyle.h */,
 				E2D957081BA63E8600E527DF /* CreateMenuController.h */,
 				E2433D9F1B85613B00E4A3AB /* LoginViewController.h */,
 				E2D2404E1B86189500165274 /* MenuViewController.h */,
@@ -234,6 +241,7 @@
 				E257EC201B9163B300DAAC8E /* RewardsViewController.h */,
 				E2D8991A1B9DE64D00BC5E42 /* ReportsViewController.h */,
 				E2D8990F1B9DE42F00BC5E42 /* ShopHoursViewController.h */,
+				E2D381A91BC178FD00CE0152 /* UpdateMenuController.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -242,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				E2433D9D1B85613B00E4A3AB /* AppDelegate.m */,
+				E2D381B01BC194A000CE0152 /* BorderGlobalStyle.m */,
 				E2D957091BA63E8600E527DF /* CreateMenuController.m */,
 				E2433DA01B85613B00E4A3AB /* LoginViewController.m */,
 				E2D2404F1B86189500165274 /* MenuViewController.m */,
@@ -252,6 +261,7 @@
 				E257EC211B9163B300DAAC8E /* RewardsViewController.m */,
 				E2D899121B9DE4E200BC5E42 /* ReportsViewController.m */,
 				E2D899101B9DE42F00BC5E42 /* ShopHoursViewController.m */,
+				E2D381AA1BC178FD00CE0152 /* UpdateMenuController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -384,6 +394,7 @@
 				E2433DA11B85613B00E4A3AB /* LoginViewController.m in Sources */,
 				E2DFAA5E1BBCCA3500DA096D /* RemoteLogin.m in Sources */,
 				E2D9BCFB1B8B6A3B003EDAB7 /* PDKeychainBindingsController.m in Sources */,
+				E2D381AB1BC178FD00CE0152 /* UpdateMenuController.m in Sources */,
 				E2433D9E1B85613B00E4A3AB /* AppDelegate.m in Sources */,
 				E2D899111B9DE42F00BC5E42 /* ShopHoursViewController.m in Sources */,
 				E2D9570A1BA63E8600E527DF /* CreateMenuController.m in Sources */,
@@ -391,6 +402,7 @@
 				E2D9BCF81B8B69E6003EDAB7 /* PDKeychainBindings.m in Sources */,
 				E2D240501B86189500165274 /* MenuViewController.m in Sources */,
 				E257EC221B9163B300DAAC8E /* RewardsViewController.m in Sources */,
+				E2D381B11BC194A000CE0152 /* BorderGlobalStyle.m in Sources */,
 				E2DD30101BA4A39000CAEAAC /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
