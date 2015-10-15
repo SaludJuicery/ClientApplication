@@ -9,12 +9,9 @@
 #import "RemoteLogin.h"
 
 @implementation RemoteLogin
--(int) getConnection:(NSString*)username forpass:(NSString*)password forurl:(NSString*) getUrl
+-(int) getConnection:(NSArray*)keys forobjects:(NSArray*)values forurl:(NSString*) getUrl
 {
-    NSArray *keys = [NSArray arrayWithObjects:@"password", @"username", nil];
-    NSArray *objects = [NSArray arrayWithObjects:password,username, nil];
-    
-    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     NSData *jsonData ;
     NSString *jsonString;
     if([NSJSONSerialization isValidJSONObject:jsonDictionary])
