@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 Vanguards. All rights reserved.
 //
 
+#import "UpdateMenuViewController.h"
 #import "UpdateMenuController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "BorderglobalStyle.h"
+#import "MessageController.h"
 
 @implementation UpdateMenuController
 
@@ -22,22 +23,6 @@
     _catList.dataSource=self;
     [self.view addSubview:_catList];
     _itemList.hidden=YES;
-    
-    //Below style is for Item Description
-    //_itemDesc.layer.cornerRadius=8.0f;
-    //BorderGlobalStyle *style = [[BorderGlobalStyle alloc] init];
-
-    //[style setBorderForColor:[UIColor redColor] width:1.0f radius:8.0f ];
-
-    // _itemDesc.layer.masksToBounds=YES;
-   //_itemDesc.layer.borderColor=[[UIColor blackColor]CGColor];
-   // _itemDesc.layer.borderWidth= 1.0f;
-   
-    //Below border style for item ingredients
-    //_itemDesc.layer.cornerRadius=8.0f;
-    //_itemIngre.layer.masksToBounds=YES;
-   // _itemIngre.layer.borderColor=[[UIColor blackColor]CGColor];
-   // _itemIngre.layer.borderWidth= 1.0f;
     
 }
 
@@ -95,10 +80,10 @@
     // Pass the selected object to the new view controller.
     
     
-    UpdateMenuController *destViewController = segue.destinationViewController;
+    UpdateMenuViewController *destViewController = segue.destinationViewController;
     
     if ([segue.identifier isEqualToString:@"sw_upmenu"]) {
-        destViewController.itemName.text =_TempStr;
+        destViewController.tempName =_TempStr;
     }
 }
 
@@ -120,80 +105,6 @@
     [self.itemList reloadData];
     
     
-}
-
-- (IBAction)UpdateMenu:(id)sender {
-    
-    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"\\d{1,2}(\\.\\d{1,2})?" options:NSRegularExpressionCaseInsensitive error:NULL];
-    NSTextCheckingResult *match = [regExp firstMatchInString:_itemPrice.text options:0 range:NSMakeRange(0, [_itemPrice.text length])];
-    //NSString *menuData;
-    
-    if ([_itemCat.text isEqualToString:@""])
-    {
-        [self displayMsg:@"Item Category: Field cannot be empty."];
-        [_itemCat becomeFirstResponder];
-    }
-    else if([_itemName.text isEqualToString:@""]){
-        [self displayMsg:@"Item Name: Field cannot be empty."];
-        [_itemName becomeFirstResponder];
-    }
-    else if([_itemDesc.text isEqualToString:@""]){
-        [self displayMsg:@"Item Description: Field cannot be empty."];
-        [_itemDesc becomeFirstResponder];
-    }
-    else if([_itemIngre.text isEqualToString:@""]){
-        [self displayMsg:@"Item Ingredients: Field cannot be empty."];
-        [_itemIngre becomeFirstResponder];
-    }
-    else if(!match){
-        [self displayMsg:@"Item Price: Please enter only numbers.Ex. 99.99"];
-        [_itemPrice becomeFirstResponder];
-    }
-    else{
-        
-        NSString *name = _itemName.text;
-        NSString *cate = _itemCat.text;
-        NSString *desc = _itemDesc.text;
-        NSString *ingre = _itemIngre.text;
-        NSString *price = _itemPrice.text;
-        
-        NSDictionary *jsonMenu = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  name, @"name",
-                                  cate, @"cate",
-                                  desc, @"desc",
-                                  ingre, @"ingre",
-                                  price, @"price",nil];
-        
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonMenu options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [self displayMsg:@"Menu Updated Successfully"];
-        NSLog(@"menu:%@", result);
-    }
-}
-
-- (IBAction)Clear:(id)sender {
-        int i;
-        
-        for(i=1;i<=5;i++)
-        {
-            UITextField *textField=(UITextField *)[self.view viewWithTag:i];
-            [textField setText:@""];
-        }
-}
-
-//Display Error Message
--(void)displayMsg:(NSString *)msg
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Error Message"
-                          message:[NSString stringWithFormat:@"%@",msg]
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    
-    [alert show];
-
 }
 
 @end
