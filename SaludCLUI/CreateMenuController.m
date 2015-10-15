@@ -7,6 +7,8 @@
 //
 
 #import "CreateMenuController.h"
+#import "RemoteLogin.h"
+#import "MessageController.h"
 
 @interface CreateMenuController ()
 
@@ -52,25 +54,27 @@
     NSTextCheckingResult *match = [regExp firstMatchInString:_itemPrice.text options:0 range:NSMakeRange(0, [_itemPrice.text length])];
     //NSString *menuData;
     
+    MessageController *msg = [[MessageController alloc] init];
+    
     if ([_itemCat.text isEqualToString:@""])
     {
-        [self displayMessage:@"Item Category: Field cannot be empty."];
+        [msg displayMessage:@"Item Category: Field cannot be empty."];
         [_itemCat becomeFirstResponder];
     }
     else if([_itemName.text isEqualToString:@""]){
-        [self displayMessage:@"Item Name: Field cannot be empty."];
+        [msg displayMessage:@"Item Name: Field cannot be empty."];
         [_itemName becomeFirstResponder];
     }
     else if([_itemDesc.text isEqualToString:@""]){
-        [self displayMessage:@"Item Description: Field cannot be empty."];
+        [msg displayMessage:@"Item Description: Field cannot be empty."];
         [_itemDesc becomeFirstResponder];
     }
     else if([_itemIngre.text isEqualToString:@""]){
-        [self displayMessage:@"Item Ingredients: Field cannot be empty."];
+        [msg displayMessage:@"Item Ingredients: Field cannot be empty."];
         [_itemIngre becomeFirstResponder];
     }
     else if(!match){
-        [self displayMessage:@"Item Price: Please enter only numbers.Ex. 99.99"];
+        [msg displayMessage:@"Item Price: Please enter only numbers.Ex. 99.99"];
         [_itemPrice becomeFirstResponder];
     }
     else{
@@ -81,33 +85,27 @@
         NSString *ingre = _itemIngre.text;
         NSString *price = _itemPrice.text;
         
-        NSDictionary *jsonMenu = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        name, @"name",
-                                        cate, @"cate",
-                                        desc, @"desc",
-                                        ingre, @"ingre",
-                                        price, @"price",nil];
+        NSArray *keys = [NSArray arrayWithObjects:@"item_name", @"category",@"price",@"description",@"ingredients", nil];
+        NSArray *objects = [NSArray arrayWithObjects:name,cate,price,desc,ingre, nil];
         
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonMenu options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];//This var holds the json object
-        [self displayMessage:@"Menu Created Successfully"];
-        NSLog(@"menu:%@", result);
+        NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/insert";
+        
+        RemoteLogin *remote = [[RemoteLogin alloc] init];
+        int res = [remote getConnection:keys forobjects:objects forurl:url];
 
+        if(res==1)
+        {
+            [msg displayMessage:@"Menu Created Successfully"];
+        }
+        else
+        {
+            [msg displayMessage:@"Login Error: Invalid Credentials"];
+        }
+       
     }
 }
 
--(void)displayMessage:(NSString *)msg {
 
-    UIAlertView *alert = [[UIAlertView alloc]
-                      initWithTitle:@"Error Message"
-                      message:[NSString stringWithFormat:@"%@",msg]
-                      delegate:self
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil];
-
-[alert show];
-}
 
 /*
 #pragma mark - Navigation
