@@ -6,8 +6,23 @@
 //  Copyright (c) 2015 Vanguards. All rights reserved.
 //
 
-#import "ErrorMessageController.h"
+#import "MessageController.h"
+@import UIKit.UIAlertView;
 
-@implementation ErrorMessageController
+@implementation MessageController
+
+
+-(void)displayMessage:(NSString *)msg {
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Message"
+                          message:[NSString stringWithFormat:@"%@",msg]
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    
+    [alert show];
+}
+
 
 @end
