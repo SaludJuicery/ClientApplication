@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface RemoteLogin : NSObject
--(int) getConnection:(NSString*)username forpass:(NSString*)password forurl:(NSString*) getUrl;
+-(int) getConnection:(NSArray*)keys forobjects:(NSArray*)objects forurl:(NSString*) getUrl;
 @end
