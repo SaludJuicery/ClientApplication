@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ErrorMessageController : NSObject
+@interface MessageController : NSObject
+
+-(void)displayMessage:(NSString *)msg ;
 
 @end
