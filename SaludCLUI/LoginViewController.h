@@ -16,7 +16,6 @@
 }
 - (IBAction)checkBoxButton:(id)sender;
 
--(void)displayErrorMsg:(NSString *)errMsg;
 
 @property (weak, nonatomic) IBOutlet UIButton *userLogin;
 
