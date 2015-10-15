@@ -12,7 +12,7 @@
 
 - (IBAction)submitButton:(id)sender;
 - (IBAction)clearButton:(id)sender;
-- (void)displayMessage:(NSString *)msg;
+//- (void)displayMessage:(NSString *)msg;
 
 @property (weak, nonatomic) IBOutlet UIButton *submit;
 @property (weak, nonatomic) IBOutlet UIButton *clear;
