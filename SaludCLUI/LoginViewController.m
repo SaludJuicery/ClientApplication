@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "PDKeychainBindings.h"
 #import "RemoteLogin.h"
+#import "MessageController.h"
 
 @interface LoginViewController ()
 
@@ -34,56 +35,51 @@
 
 - (IBAction)userLogin:(UIButton *)sender {
     
+    MessageController *msg=[[MessageController alloc] init];
+    
     //If Username field is empty
     if([_username isEqual:@""])
     {
-        [self displayErrorMsg:@"Input Error: Username is empty"];
+        [msg displayMessage:@"Input Error: Username is empty"];
         [_username becomeFirstResponder];
     }
     //IF password field is empty
     else if([_password isEqual:@""])
     {
-        [self displayErrorMsg:@"Input Error: Password is empty"];
+        [msg displayMessage:@"Input Error: Password is empty"];
         [_password becomeFirstResponder];
     }
     //Below code let user navigate to MenuView Controller upon successfull login
     else
     {
-        int res=0;
+        int res;
         //retrieve username and password
         NSString *username = _username.text;
         NSString *password = _password.text;
-        NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/dbLogin";
+        
+        NSArray *keys = [NSArray arrayWithObjects:@"password", @"username", nil];
+        NSArray *objects = [NSArray arrayWithObjects:password,username, nil];
 
-       /* RemoteLogin *remote = [[RemoteLogin alloc] init];
-        res = [remote getConnection:username forpass:password forurl:url];
+        
+        NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/login";
+
+        RemoteLogin *remote = [[RemoteLogin alloc] init];
+        res = [remote getConnection:keys forobjects:objects forurl:url];
         
         if(res==1)
         {
-         */   //This code will help to navigate from Login Screen to MenuViewController
-            [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
-       /* }
+            //This code will help to navigate from Login Screen to  MenuViewController
+            [msg displayMessage:@"Login Error: Invalid Credentials"];
+            [_username becomeFirstResponder];
+        }
         else
         {
-            [self displayErrorMsg:@"Login Error: Invalid Credentials"];
-            [_username becomeFirstResponder];
-        }*/
+            [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
+        }
        
     }
 }
 
--(void)displayErrorMsg:(NSString *)errMsg{
-    
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Error Message"
-                          message:[NSString stringWithFormat:@"%@",errMsg]
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    
-    [alert show];
-    
-}
 
 - (void)viewDidLoad {
     checked= FALSE;
@@ -98,7 +94,7 @@
     _password.text=@"";
  [checkBoxButton setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
     [_username becomeFirstResponder];
-    [super viewWillAppear:nil];
+    [super viewWillAppear:true];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
