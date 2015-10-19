@@ -66,16 +66,16 @@
         RemoteLogin *remote = [[RemoteLogin alloc] init];
         res = [remote getConnection:keys forobjects:objects forurl:url];
         
-        if(res==1)
+        /*if(res==1)
         {
-            //This code will help to navigate from Login Screen to  MenuViewController
             [msg displayMessage:@"Login Error: Invalid Credentials"];
             [_username becomeFirstResponder];
         }
         else
         {
-            [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
-        }
+            //This code will help to navigate from Login Screen to  MenuViewController
+           */ [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
+        //}
        
     }
 }
