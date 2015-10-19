@@ -45,14 +45,9 @@
 
 /*Below function is used to submit the data as entered by the user*/
 -(void)submitButton:(id)sender {
-
-    //\d{1,2}(\.\d{1,2})?
-    //[0-9]?[0-9]?(\.[0-9][0-9]?)?
-    //(\\d)?\\d?.\\d(\\d)?
     
     NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"\\d{1,2}(\\.\\d{1,2})?" options:NSRegularExpressionCaseInsensitive error:NULL];
     NSTextCheckingResult *match = [regExp firstMatchInString:_itemPrice.text options:0 range:NSMakeRange(0, [_itemPrice.text length])];
-    //NSString *menuData;
     
     MessageController *msg = [[MessageController alloc] init];
     
@@ -95,11 +90,12 @@
 
         if(res==1)
         {
-            [msg displayMessage:@"Menu Created Successfully"];
+            [msg displayMessage:@"Connection Error: Please try again..."];
         }
         else
         {
-            [msg displayMessage:@"Login Error: Invalid Credentials"];
+             [msg displayMessage:@"Menu Created Successfully"];
+            [self clearButton:sender];
         }
        
     }
