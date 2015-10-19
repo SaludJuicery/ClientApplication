@@ -9,6 +9,7 @@
 #import "UpdateMenuViewController.h"
 #import "BorderglobalStyle.h"
 #import "MessageController.h"
+#import "RemoteLogin.h"
 
 @interface UpdateMenuViewController ()
 
@@ -46,7 +47,7 @@
     
     NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"\\d{1,2}(\\.\\d{1,2})?" options:NSRegularExpressionCaseInsensitive error:NULL];
     NSTextCheckingResult *match = [regExp firstMatchInString:_itemPrice.text options:0 range:NSMakeRange(0, [_itemPrice.text length])];
-    //NSString *menuData;
+   
     
     if ([_itemCat.text isEqualToString:@""])
     {
@@ -77,18 +78,23 @@
         NSString *ingre = _itemIngre.text;
         NSString *price = _itemPrice.text;
         
-        NSDictionary *jsonMenu = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  name, @"name",
-                                  cate, @"cate",
-                                  desc, @"desc",
-                                  ingre, @"ingre",
-                                  price, @"price",nil];
+        NSArray *keys = [NSArray arrayWithObjects:@"item_name", @"category",@"price",@"description",@"ingredients", nil];
+        NSArray *objects = [NSArray arrayWithObjects:name,cate,price,desc,ingre, nil];
         
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonMenu options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [self displayMsg:@"Menu Updated Successfully"];
-        NSLog(@"menu:%@", result);
+        //Below URL needs to be updated in backend for update
+        NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/update";
+        
+        RemoteLogin *remote = [[RemoteLogin alloc] init];
+        int res = [remote getConnection:keys forobjects:objects forurl:url];
+        
+        if(res==1)
+        {
+            [msg displayMessage:@"Connection Error: Please try again..."];
+        }
+        else
+        {
+            [msg displayMessage:@"Menu Updated Successfully"];
+        }
     }
 }
 
