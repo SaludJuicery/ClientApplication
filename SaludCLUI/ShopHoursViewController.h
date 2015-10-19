@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShopHoursViewController : UIViewController
+@interface ShopHoursViewController : UIViewController 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *hoursButton;
 @end
