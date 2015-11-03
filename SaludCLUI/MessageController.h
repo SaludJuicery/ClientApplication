@@ -11,6 +11,7 @@
 @interface MessageController : NSObject
 
 -(void)displayMessage:(NSString *)msg ;
+
 -(void)deleteConfirmation:(NSString *)msg ;
 
 @end
