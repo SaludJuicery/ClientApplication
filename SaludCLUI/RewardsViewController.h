@@ -17,6 +17,7 @@
 @property (strong,nonatomic) DownPicker *downPickerCat;
 @property (strong,nonatomic) DownPicker *downPickerItem;
 @property (strong,nonatomic) DownPicker *downPickerLoc;
+
 @property (weak, nonatomic) IBOutlet UITextField *textCategory;
 @property (weak, nonatomic) IBOutlet UITextField *textLocation;
 @property (weak, nonatomic) IBOutlet UITextField *textItem;
@@ -29,6 +30,7 @@
 -(IBAction)onRadioBtn:(id)sender;
 
 - (IBAction)addReward:(id)sender;
+
 - (IBAction)clearFields:(id)sender;
 
 @end
