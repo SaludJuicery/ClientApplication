@@ -46,7 +46,7 @@
 /*Below function is used to submit the data as entered by the user*/
 -(void)submitButton:(id)sender {
     
-    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"\\d{1,2}(\\.\\d{1,2})?" options:NSRegularExpressionCaseInsensitive error:NULL];
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"^(?:|0|[1-9]\\d*)(?:\\.\\d*)?$" options:NSRegularExpressionCaseInsensitive error:NULL];
     NSTextCheckingResult *match = [regExp firstMatchInString:_itemPrice.text options:0 range:NSMakeRange(0, [_itemPrice.text length])];
     
     MessageController *msg = [[MessageController alloc] init];
@@ -54,23 +54,27 @@
     if ([_itemCat.text isEqualToString:@""])
     {
         [msg displayMessage:@"Item Category: Field cannot be empty."];
-        [_itemCat becomeFirstResponder];
+       
     }
     else if([_itemName.text isEqualToString:@""]){
         [msg displayMessage:@"Item Name: Field cannot be empty."];
-        [_itemName becomeFirstResponder];
+        
     }
     else if([_itemDesc.text isEqualToString:@""]){
         [msg displayMessage:@"Item Description: Field cannot be empty."];
-        [_itemDesc becomeFirstResponder];
+        
     }
     else if([_itemIngre.text isEqualToString:@""]){
         [msg displayMessage:@"Item Ingredients: Field cannot be empty."];
-        [_itemIngre becomeFirstResponder];
+        
+    }
+    else if([_itemPrice.text isEqualToString:@""]){
+        [msg displayMessage:@"Item Price: Field cannot be empty."];
+        
     }
     else if(!match){
         [msg displayMessage:@"Item Price: Please enter only numbers.Ex. 99.99"];
-        [_itemPrice becomeFirstResponder];
+        
     }
     else{
     

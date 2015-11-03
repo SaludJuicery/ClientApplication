@@ -67,7 +67,7 @@
             [pastCategory addObject:_nCategory.text];
         }
         
-       // [self performSegueWithIdentifier:@"sw_createmenu" sender: self];
+       [self performSegueWithIdentifier:@"sw_newmenu" sender: self];
     }
     
 }
@@ -87,15 +87,18 @@
 }
 
 - (IBAction)checkContinue:(UIButton *)sender {
-    if ([category.text isEqualToString:@""])
+ 
+    NSString *temp =category.text;
+    
+    if([temp isEqual:@""])
     {
         [self displayErrorMsg:@"Category Name cannot be empty"];
         [category becomeFirstResponder];
         
     }
     else{
-        //This code will help to navigate from Login Screen to MenuViewController
-        //[self performSegueWithIdentifier:@"sw_createmenu" sender: self];
+        //This code will help to navigate from Menu types to Create Menu Screen
+        [self performSegueWithIdentifier:@"sw_contmenu" sender: self];
     }
     
 }
