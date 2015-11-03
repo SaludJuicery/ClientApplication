@@ -21,12 +21,11 @@
 - (void)viewDidLoad {
      [super viewDidLoad];
     
+    //Object for calling alert messages
     alertMsg = [[MessageController alloc] init];
 
-    // create the array of data
     NSMutableArray* bandArray = [[NSMutableArray alloc] init];
     
-    // add some sample data
     //Get URL request as json data and loop by adding data to bandArray
     [bandArray addObject:@"Smoothies"];
     [bandArray addObject:@"Juices & Refereshers"];
@@ -38,7 +37,7 @@
     // bind yourTextField to DownPicker
     self.downPicker = [[DownPicker alloc] initWithTextField:self.textField withData:bandArray];
     
-    
+    //Fill this array with menu items based on category selected
     self.autoCompleteData = [[NSMutableArray alloc] initWithObjects:@"JUICES & REFRESHERS",@"SMOOTHIES",@"HEALTH SHOTS",@"HOT BEVERAGES",@"BOWLS", nil];
     
     /*
