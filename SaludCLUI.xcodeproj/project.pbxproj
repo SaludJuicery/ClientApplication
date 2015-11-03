@@ -14,7 +14,17 @@
 		E2433DA61B85613B00E4A3AB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2433DA51B85613B00E4A3AB /* Images.xcassets */; };
 		E2433DA91B85613B00E4A3AB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2433DA71B85613B00E4A3AB /* LaunchScreen.xib */; };
 		E2433DB51B85613B00E4A3AB /* SaludCLUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2433DB41B85613B00E4A3AB /* SaludCLUITests.m */; };
+		E2537E9F1BE7231D00CC1BC1 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E2537E9E1BE7231D00CC1BC1 /* RadioButton.m */; };
+		E2537EA21BE7251800CC1BC1 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E2537EA01BE7251800CC1BC1 /* checked.png */; };
+		E2537EA31BE7251800CC1BC1 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = E2537EA11BE7251800CC1BC1 /* unchecked.png */; };
+		E2537EA61BE7332E00CC1BC1 /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2537EA41BE7332E00CC1BC1 /* checked@2x.png */; };
+		E2537EA71BE7332E00CC1BC1 /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2537EA51BE7332E00CC1BC1 /* unchecked@2x.png */; };
 		E257EC221B9163B300DAAC8E /* RewardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E257EC211B9163B300DAAC8E /* RewardsViewController.m */; };
+		E27CD3061BE3CD8600D4A765 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E27CD3051BE3CD8600D4A765 /* SWRevealViewController.m */; };
+		E27CD3D21BE3F60900D4A765 /* DownPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E27CD3D11BE3F60900D4A765 /* DownPicker.m */; };
+		E27CD3D61BE3F68100D4A765 /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E27CD3D31BE3F68100D4A765 /* downArrow.png */; };
+		E27CD3D71BE3F68100D4A765 /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E27CD3D41BE3F68100D4A765 /* downArrow@2x.png */; };
+		E27CD3D81BE3F68100D4A765 /* downArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E27CD3D51BE3F68100D4A765 /* downArrow@3x.png */; };
 		E27E908D1B9DFBBE00DCB49D /* checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E27E907F1B9DFBBE00DCB49D /* checkbox-checked.png */; };
 		E27E908E1B9DFBBE00DCB49D /* checkbox-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E27E90801B9DFBBE00DCB49D /* checkbox-pressed.png */; };
 		E27E908F1B9DFBBE00DCB49D /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = E27E90811B9DFBBE00DCB49D /* checkbox.png */; };
@@ -42,7 +52,6 @@
 		E2D9BCFB1B8B6A3B003EDAB7 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D9BCFA1B8B6A3B003EDAB7 /* PDKeychainBindingsController.m */; };
 		E2DB45641BCB076C00ED0FC6 /* UpdateMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DB45631BCB076C00ED0FC6 /* UpdateMenuViewController.m */; };
 		E2DB45671BCB095500ED0FC6 /* DeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DB45661BCB095500ED0FC6 /* DeleteViewController.m */; };
-		E2DD30101BA4A39000CAEAAC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DD300F1BA4A39000CAEAAC /* SWRevealViewController.m */; };
 		E2DFAA5E1BBCCA3500DA096D /* RemoteLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = E2DFAA5D1BBCCA3500DA096D /* RemoteLogin.m */; };
 		E2DFAA601BBD660F00DA096D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DFAA5F1BBD660F00DA096D /* Security.framework */; };
 /* End PBXBuildFile section */
@@ -72,8 +81,21 @@
 		E2433DAE1B85613B00E4A3AB /* SaludCLUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaludCLUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2433DB31B85613B00E4A3AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2433DB41B85613B00E4A3AB /* SaludCLUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaludCLUITests.m; sourceTree = "<group>"; };
+		E2537E9D1BE7231D00CC1BC1 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		E2537E9E1BE7231D00CC1BC1 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
+		E2537EA01BE7251800CC1BC1 /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
+		E2537EA11BE7251800CC1BC1 /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
+		E2537EA41BE7332E00CC1BC1 /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
+		E2537EA51BE7332E00CC1BC1 /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		E257EC201B9163B300DAAC8E /* RewardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsViewController.h; sourceTree = "<group>"; };
 		E257EC211B9163B300DAAC8E /* RewardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsViewController.m; sourceTree = "<group>"; };
+		E27CD3041BE3CD8600D4A765 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		E27CD3051BE3CD8600D4A765 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		E27CD3D01BE3F60900D4A765 /* DownPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownPicker.h; sourceTree = "<group>"; };
+		E27CD3D11BE3F60900D4A765 /* DownPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownPicker.m; sourceTree = "<group>"; };
+		E27CD3D31BE3F68100D4A765 /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = ../../downArrow.png; sourceTree = "<group>"; };
+		E27CD3D41BE3F68100D4A765 /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@2x.png"; path = "../../downArrow@2x.png"; sourceTree = "<group>"; };
+		E27CD3D51BE3F68100D4A765 /* downArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@3x.png"; path = "../../downArrow@3x.png"; sourceTree = "<group>"; };
 		E27E907F1B9DFBBE00DCB49D /* checkbox-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked.png"; sourceTree = "<group>"; };
 		E27E90801B9DFBBE00DCB49D /* checkbox-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-pressed.png"; sourceTree = "<group>"; };
 		E27E90811B9DFBBE00DCB49D /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
@@ -113,8 +135,6 @@
 		E2DB45631BCB076C00ED0FC6 /* UpdateMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateMenuViewController.m; sourceTree = "<group>"; };
 		E2DB45651BCB095500ED0FC6 /* DeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteViewController.h; sourceTree = "<group>"; };
 		E2DB45661BCB095500ED0FC6 /* DeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteViewController.m; sourceTree = "<group>"; };
-		E2DD300E1BA4A39000CAEAAC /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = ../../Vivek/Downloads/SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
-		E2DD300F1BA4A39000CAEAAC /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = ../../Vivek/Downloads/SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
 		E2DFAA5C1BBCCA3500DA096D /* RemoteLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteLogin.h; sourceTree = "<group>"; };
 		E2DFAA5D1BBCCA3500DA096D /* RemoteLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLogin.m; sourceTree = "<group>"; };
 		E2DFAA5F1BBD660F00DA096D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -197,28 +217,39 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		E257EC151B91274E00DAAC8E /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E2DD300E1BA4A39000CAEAAC /* SWRevealViewController.h */,
-				E2DD300F1BA4A39000CAEAAC /* SWRevealViewController.m */,
-			);
-			name = SWRevealViewController;
-			path = ../../../../../Downloads/SWRevealViewController;
-			sourceTree = "<group>";
-		};
 		E257EC191B91275700DAAC8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2537E9D1BE7231D00CC1BC1 /* RadioButton.h */,
+				E2537E9E1BE7231D00CC1BC1 /* RadioButton.m */,
+				E27CD3D01BE3F60900D4A765 /* DownPicker.h */,
+				E27CD3D11BE3F60900D4A765 /* DownPicker.m */,
+				E27CD3031BE3CD8600D4A765 /* SWRevealViewController */,
 				E2DFAA5F1BBD660F00DA096D /* Security.framework */,
-				E257EC151B91274E00DAAC8E /* SWRevealViewController */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E27CD3031BE3CD8600D4A765 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E27CD3041BE3CD8600D4A765 /* SWRevealViewController.h */,
+				E27CD3051BE3CD8600D4A765 /* SWRevealViewController.m */,
+			);
+			name = SWRevealViewController;
+			path = ../../../../Downloads/SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		E27E907E1B9DFBBE00DCB49D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E2537EA41BE7332E00CC1BC1 /* checked@2x.png */,
+				E2537EA51BE7332E00CC1BC1 /* unchecked@2x.png */,
+				E2537EA01BE7251800CC1BC1 /* checked.png */,
+				E2537EA11BE7251800CC1BC1 /* unchecked.png */,
+				E27CD3D31BE3F68100D4A765 /* downArrow.png */,
+				E27CD3D41BE3F68100D4A765 /* downArrow@2x.png */,
+				E27CD3D51BE3F68100D4A765 /* downArrow@3x.png */,
 				E27E907F1B9DFBBE00DCB49D /* checkbox-checked.png */,
 				E27E90801B9DFBBE00DCB49D /* checkbox-pressed.png */,
 				E27E90811B9DFBBE00DCB49D /* checkbox.png */,
@@ -379,19 +410,26 @@
 				E27E90921B9DFBBE00DCB49D /* logout.png in Resources */,
 				E27E908D1B9DFBBE00DCB49D /* checkbox-checked.png in Resources */,
 				E2433DA91B85613B00E4A3AB /* LaunchScreen.xib in Resources */,
+				E27CD3D61BE3F68100D4A765 /* downArrow.png in Resources */,
 				E27E90931B9DFBBE00DCB49D /* LPetrilla_SaludJuicery-2.jpg in Resources */,
 				E27E90981B9DFBBE00DCB49D /* rewards.png in Resources */,
+				E27CD3D71BE3F68100D4A765 /* downArrow@2x.png in Resources */,
 				E27E908E1B9DFBBE00DCB49D /* checkbox-pressed.png in Resources */,
 				E27E90991B9DFBBE00DCB49D /* salud_juicery2.png in Resources */,
 				E27E90971B9DFBBE00DCB49D /* reports.png in Resources */,
 				E27E90901B9DFBBE00DCB49D /* Forward-50.png in Resources */,
 				E27E90911B9DFBBE00DCB49D /* Geo-fence-50.png in Resources */,
+				E2537EA31BE7251800CC1BC1 /* unchecked.png in Resources */,
 				E27E909A1B9DFBBE00DCB49D /* Shop Hours.png in Resources */,
 				E27E908F1B9DFBBE00DCB49D /* checkbox.png in Resources */,
+				E2537EA71BE7332E00CC1BC1 /* unchecked@2x.png in Resources */,
 				E27E90961B9DFBBE00DCB49D /* Pending Orders.png in Resources */,
 				E27E90951B9DFBBE00DCB49D /* menu.png in Resources */,
 				E27E90941B9DFBBE00DCB49D /* Manage Menu.png in Resources */,
+				E27CD3D81BE3F68100D4A765 /* downArrow@3x.png in Resources */,
+				E2537EA21BE7251800CC1BC1 /* checked.png in Resources */,
 				E2433DA61B85613B00E4A3AB /* Images.xcassets in Resources */,
+				E2537EA61BE7332E00CC1BC1 /* checked@2x.png in Resources */,
 				E2D240521B86266800165274 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D899151B9DE50A00BC5E42 /* NavigationViewController.m in Sources */,
+				E27CD3061BE3CD8600D4A765 /* SWRevealViewController.m in Sources */,
 				E2D899131B9DE4E200BC5E42 /* ReportsViewController.m in Sources */,
 				E2433DA11B85613B00E4A3AB /* LoginViewController.m in Sources */,
 				E2DFAA5E1BBCCA3500DA096D /* RemoteLogin.m in Sources */,
@@ -418,6 +457,7 @@
 				E2D9BCFB1B8B6A3B003EDAB7 /* PDKeychainBindingsController.m in Sources */,
 				E2D381AB1BC178FD00CE0152 /* UpdateMenuController.m in Sources */,
 				E2433D9E1B85613B00E4A3AB /* AppDelegate.m in Sources */,
+				E27CD3D21BE3F60900D4A765 /* DownPicker.m in Sources */,
 				E2D899111B9DE42F00BC5E42 /* ShopHoursViewController.m in Sources */,
 				E2D9570A1BA63E8600E527DF /* CreateMenuController.m in Sources */,
 				E2433D9B1B85613B00E4A3AB /* main.m in Sources */,
@@ -428,7 +468,7 @@
 				E257EC221B9163B300DAAC8E /* RewardsViewController.m in Sources */,
 				E2D381B11BC194A000CE0152 /* BorderGlobalStyle.m in Sources */,
 				E2DB45671BCB095500ED0FC6 /* DeleteViewController.m in Sources */,
-				E2DD30101BA4A39000CAEAAC /* SWRevealViewController.m in Sources */,
+				E2537E9F1BE7231D00CC1BC1 /* RadioButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +595,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -569,6 +610,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
