@@ -218,13 +218,7 @@
 
 - (void)applicationFinishedRestoringState
 {
-   /* SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {
-        _rewardsButton.target=self.revealViewController;
-        _rewardsButton.action=@selector(revealToggle:);
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    }*/
+   
 }
 
 /*
