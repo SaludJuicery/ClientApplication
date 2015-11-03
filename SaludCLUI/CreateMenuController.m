@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
   
     //Below code loads the category value from menucontroller
     self.itemCat.text = _tempCat;
@@ -27,14 +26,14 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+   
 }
 
-/*BElow FUnction is used to clear all the fields in the screen*/
 -(void)clearButton:(id)sender
 {
     int i;
     
+    //Clear all the textfields in the view controller
     for(i=1;i<=5;i++)
     {
         UITextField *textField=(UITextField *)[self.view viewWithTag:i];
