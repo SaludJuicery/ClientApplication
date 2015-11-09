@@ -19,6 +19,9 @@
 @implementation RewardsViewController
 @synthesize radioPercent;
 @synthesize radioPrice;
+@synthesize endcheckbox;
+@synthesize startcheckbox;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,33 +61,49 @@
    //Initialize the radio button images to uncheck
     [radioPrice setImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
     [radioPercent setImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
+    [startcheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+    [endcheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
     
-    self.textDate.delegate =self;
+    self.startDate.delegate =self;
     UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker setDate:[NSDate date]];
     [datePicker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
-    [self.textDate setInputView:datePicker];
+    [self.startDate setInputView:datePicker];
+    
+    self.endDate.delegate =self;
+    UIDatePicker *datePicker1 = [[UIDatePicker alloc]init];
+    datePicker1.datePickerMode = UIDatePickerModeDate;
+    [datePicker1 setDate:[NSDate date]];
+    [datePicker1 addTarget:self action:@selector(updateTextField1:) forControlEvents:UIControlEventValueChanged];
+    [self.endDate setInputView:datePicker1];
 
 }
 
-//Method to set the selected date to the date text field
+//Method to set the selected start date to the date text field
 -(void)updateTextField:(id)sender
 {
-    if([_textDate isFirstResponder]){
-        UIDatePicker *picker = (UIDatePicker*)_textDate.inputView;
-        _textDate.text = [self formatDate:picker.date];
+    if([_startDate isFirstResponder]){
+        UIDatePicker *picker = (UIDatePicker*)_startDate.inputView;
+        _startDate.text = [self formatDate:picker.date];
+        
+        //To uncheck checkbox when datepicker is shown
+        [startcheckbox setSelected:NO];
     }
-    
- /*   NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    NSDate *eventDate = picker.date;
-    [dateFormat setDateFormat:@"dd/MM/yyyy"];
-    
-    NSString *dateString = [dateFormat stringFromDate:eventDate];
-    txtFieldBranchYear.text = [NSString stringWithFormat:@"%@",dateString];
-*/
-    
 }
+
+//Method to set the selected end date to the date text field
+-(void)updateTextField1:(id)sender
+{
+    if([_endDate isFirstResponder]){
+        UIDatePicker *picker = (UIDatePicker*)_endDate.inputView;
+        _endDate.text = [self formatDate:picker.date];
+        
+        //To uncheck checkbox when datepicker is shown
+        [endcheckbox setSelected:NO];
+    }
+}
+
 
 // Formats the date chosen with the date picker.
 - (NSString *)formatDate:(NSDate *)date
@@ -96,7 +115,7 @@
     return formattedDate;
 }
 
-//Method to change radio button images from check to uncheck or vice-versa
+//Method to change radio and checkbox images from check to uncheck or vice-versa
 -(void)viewDidAppear:(BOOL)animated{
 
     [radioPrice setImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
@@ -106,6 +125,15 @@
     [radioPercent setImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
     [radioPercent setImage:[UIImage imageNamed:@"checked.png"] forState:UIControlStateSelected];
     [radioPercent addTarget:self action:@selector(onRadioBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [startcheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+    [startcheckbox setImage:[UIImage imageNamed:@"checkbox-checked.png"] forState:UIControlStateSelected];
+    [startcheckbox addTarget:self action:@selector(onCheckBoxBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [endcheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+    [endcheckbox setImage:[UIImage imageNamed:@"checkbox-checked.png"] forState:UIControlStateSelected];
+    [endcheckbox addTarget:self action:@selector(onCheckBoxBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
     
 }
 
@@ -142,6 +170,56 @@
     }
  }
 
+//Method to check the checkbox status and update the image
+- (IBAction)onCheckBoxBtn:(id)sender{
+    switch ([sender tag]) {
+        case 1:
+            if([startcheckbox isSelected]==YES)
+            {
+               _startDate.text=@"";
+                [startcheckbox setSelected:NO];
+            }
+            else{
+                //If checkbox is selected set the date to the textbox
+                NSDate* date = [NSDate date];
+                NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+                NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
+                formatter.timeZone = destinationTimeZone;
+                [formatter setDateStyle:NSDateFormatterLongStyle];
+                [formatter setDateFormat:@"MM/dd/yyyy"];
+                NSString* dateString = [formatter stringFromDate:date];
+                _startDate.text = dateString;
+                
+                [startcheckbox setSelected:YES];
+            }
+            break;
+        case 2:
+            if([endcheckbox isSelected]==YES)
+            {
+                 _endDate.text=@"";
+                [endcheckbox setSelected:NO];
+            }
+            else{
+                //If checkbox is selected set the date to the textbox
+                NSDate* date = [NSDate date];
+                NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+                NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
+                formatter.timeZone = destinationTimeZone;
+                [formatter setDateStyle:NSDateFormatterLongStyle];
+                [formatter setDateFormat:@"MM/dd/yyyy"];
+                NSString* dateString = [formatter stringFromDate:date];
+                _endDate.text = dateString;
+
+                [endcheckbox setSelected:YES];
+            }
+            break;
+        default:
+            break;
+    }
+
+}
+
+
 - (IBAction)addReward:(id)sender {
 
     NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"^(?:|0|[1-9]\\d*)(?:\\.\\d*)?$" options:NSRegularExpressionCaseInsensitive error:NULL];
@@ -169,19 +247,34 @@
     else if(!match){
         [msg displayMessage:@"Amount field: Please enter only numbers.Ex. 99.99, 45,etc."];
     }
-    else if([_textDate.text isEqualToString:@""]){
-        [msg displayMessage:@"Date Field cannot be empty."];
+    else if([_startDate.text isEqualToString:@""]){
+        [msg displayMessage:@"Start Date Field cannot be empty."];
+    }
+    else if([_endDate.text isEqualToString:@""]){
+        [msg displayMessage:@"End Date Field cannot be empty."];
     }
     else{
         
         NSString *name = _textItem.text;
         NSString *cate = _textCategory.text;
-        NSString *date = _textDate.text;
+        NSString *stdate = _startDate.text;
+         NSString *eddate = _endDate.text;
         NSString *loc = _textLocation.text;
-        NSString *price = _textAmount.text;
+       
+        NSString *price= [_textAmount.text stringByReplacingOccurrencesOfString:@"%" withString:@""];
         
-        NSArray *keys = [NSArray arrayWithObjects:@"item_name", @"category",@"price",@"date",@"location", nil];
-        NSArray *objects = [NSArray arrayWithObjects:name,cate,price,date,loc, nil];
+        if([radioPercent isSelected])
+        {
+         price = [NSString stringWithFormat:@"%@ %@", price,@"%"];
+        }
+        else
+        {
+         price = [NSString stringWithFormat:@"%@%@", @"$",price];
+        }
+       
+    
+        NSArray *keys = [NSArray arrayWithObjects:@"item_name", @"category",@"price",@"start_date",@"end_date",@"location", nil];
+        NSArray *objects = [NSArray arrayWithObjects:name,cate,price,stdate,eddate,loc, nil];
         
         NSString *url = @"http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/reward/insert";
         
@@ -194,7 +287,7 @@
         }
         else
         {
-            [msg displayMessage:@"Reward Created Successfully"];
+            [msg displayMessage:@"Offer Created Successfully"];
             [self clearFields:sender];
         }
     }
@@ -204,11 +297,15 @@
     
         int i;
         
-        for(i=1;i<=5;i++)
+        for(i=1;i<=6;i++)
         {
             UITextField *textField=(UITextField *)[self.view viewWithTag:i];
             [textField setText:@""];
         }
+    [radioPercent setSelected:NO];
+    [radioPrice setSelected:NO];
+    [startcheckbox setSelected:NO];
+    [endcheckbox setSelected:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -218,7 +315,13 @@
 
 - (void)applicationFinishedRestoringState
 {
-   
+   /* SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        _rewardsButton.target=self.revealViewController;
+        _rewardsButton.action=@selector(revealToggle:);
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }*/
 }
 
 /*
