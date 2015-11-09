@@ -11,7 +11,7 @@
 
 @implementation MessageController
 
-//Display normal user messages
+
 -(void)displayMessage:(NSString *)msg {
     
     UIAlertView *alert = [[UIAlertView alloc]
@@ -24,18 +24,17 @@
     [alert show];
 }
 
-//Ask confirmation to user upon deleting items
+/*
 -(void)deleteConfirmation:(NSString *)msg {
     
     UIAlertView *deleteConfirm = [[UIAlertView alloc]
                           initWithTitle:@"Confirmation"
                           message:[NSString stringWithFormat:@"%@",msg]
                           delegate:self
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles:@"Ok", nil];
+                          cancelButtonTitle:@"NO"
+                          otherButtonTitles:@"YES", nil];
     
     [deleteConfirm show];
 }
-
-
+*/
 @end
