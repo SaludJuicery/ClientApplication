@@ -14,19 +14,15 @@
     NSMutableArray *autoCompleteData;
     NSMutableArray *selectedObjects;
     UITableView *autoCompleteView;
-    MessageController *alertMsg;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *btnDelete;
-
 @property (strong,nonatomic) DownPicker *downPicker;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-
 @property (nonatomic, retain) NSMutableArray *autoCompleteData;
 @property (nonatomic, retain) NSMutableArray *selectedObjects;
 @property (nonatomic, retain) IBOutlet UITableView *autoCompleteView;
 
-//Action to delete items from db
 - (IBAction)deleteItems:(id)sender;
 
 @end
