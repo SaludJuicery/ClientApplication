@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PDKeychainBindings.h"
+#import "MessageController.h"
 
 @interface LoginViewController : UIViewController {
     BOOL checked;
     IBOutlet UIButton *checkBoxButton;
     PDKeychainBindings *bindings;
+    MessageController *msg;
 }
 - (IBAction)checkBoxButton:(id)sender;
 

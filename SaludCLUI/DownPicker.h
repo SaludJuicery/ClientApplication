@@ -6,6 +6,7 @@
 // by Darkseal, 2013-2015 - MIT License
 //
 // Website: http://www.ryadel.com/
+// GitHub:  http://www.ryadel.com/
 //
 
 #import <UIKit/UIKit.h>

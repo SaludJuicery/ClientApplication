@@ -7,15 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DownPicker.h"
+#import "MessageController.h"
 
-@interface UpdateMenuListController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface UpdateMenuListController : UIViewController <UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate>
+{
+    UIView *footerView;
+    MessageController *msg;
+}
 
+@property (strong,nonatomic) DownPicker *downPickerCat;
 @property (weak, nonatomic) IBOutlet UITextField *itemText;
-@property (weak, nonatomic) IBOutlet UITableView *itemList;
-@property (strong,nonatomic) NSArray *itemArray;
+@property (weak, nonatomic) IBOutlet UITableView *itemListView;
+@property (strong,nonatomic) NSMutableArray *itemsArray;
 @property (weak, nonatomic) NSString *menuItem;
 @property (weak, nonatomic) NSString *catName;
-@property (weak, nonatomic) IBOutlet UIButton *contUpdate;
+
+//-(void)getCategories:(id) sender;
+-(void)getMenuItems:(id) sender;
+-(void)showItems:(id)sender;
 
 
 @end

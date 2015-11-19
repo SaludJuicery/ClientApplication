@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DownPicker.h"
+#import "MessageController.h"
 
 @interface ReportsViewController : UIViewController
-
+{
+    MessageController *msg;
+}
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *reportButton;
+@property (strong,nonatomic) DownPicker *downPickerlocation;
+@property (strong,nonatomic) DownPicker *downPickerreport;
+@property (weak, nonatomic) IBOutlet UITextField *locOption;
+@property (weak, nonatomic) IBOutlet UITextField *reportOption;
 
 @end

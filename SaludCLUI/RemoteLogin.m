@@ -11,41 +11,44 @@
 @implementation RemoteLogin
 -(int) getConnection:(NSArray*)keys forobjects:(NSArray*)values forurl:(NSString*) getUrl
 {
-    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-    NSData *jsonData ;
-    NSString *jsonString;
-    if([NSJSONSerialization isValidJSONObject:jsonDictionary])
-    {
-        jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:nil];
-        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    }
-    
-//    NSString *requestString = getUrl;
-    
-    NSURL *url = [NSURL URLWithString:getUrl];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody: jsonData];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
-    
-    NSError *errorReturned = nil;
-    NSURLResponse *theResponse =[[NSURLResponse alloc]init];
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&theResponse error:&errorReturned];
+NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:values forKeys:keys];
 
-    //If login is failed
-    if (errorReturned) {
-       // NSLog(@"Error %@",errorReturned.description);
-        return 1;
-    }
-    //If login is success
-    else
-    {
-        NSError *jsonParsingError = nil;
-        NSMutableArray *arrDoctorInfo  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&jsonParsingError];
-        
-         NSLog(@"Dict %@",arrDoctorInfo);
-         return 0;
-    }
+NSData *jsonData ;
+NSString *jsonString;
+
+if([NSJSONSerialization isValidJSONObject:jsonDictionary])
+{
+jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:nil];
+jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+NSURL *url = [NSURL URLWithString:getUrl];
+NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+[request setHTTPMethod:@"POST"];
+[request setHTTPBody: jsonData];
+[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+[request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+
+NSError *errorReturned = nil;
+NSURLResponse *theResponse =[[NSURLResponse alloc]init];
+NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&theResponse error:&errorReturned];
+
+
+if (errorReturned) {
+_errorMsg = errorReturned.description;
+return 1;
+}
+else
+{
+NSError *jsonParsingError = nil;
+NSMutableArray *arrDoctorInfo  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&jsonParsingError];
+
+ for(NSString *str in arrDoctorInfo)
+{
+_errorMsg = [_errorMsg stringByAppendingString:str];
+}
+
+return 2;
+}
 }
 @end

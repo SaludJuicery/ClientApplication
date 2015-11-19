@@ -176,7 +176,7 @@
 		[rb setButtonSelected:NO sendControlEvent:NO];
 	}
 }
-//Selected button based on tag
+
 -(void) setSelectedWithTag:(NSInteger)tag
 {
 	if(self.tag == tag) {

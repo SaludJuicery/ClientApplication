@@ -10,4 +10,6 @@
 
 @interface RemoteLogin : NSObject
 -(int) getConnection:(NSArray*)keys forobjects:(NSArray*)objects forurl:(NSString*) getUrl;
+
+@property(strong,nonatomic) NSString *errorMsg;
 @end

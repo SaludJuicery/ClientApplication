@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DownPicker.h"
-
+#import "MessageController.h"
 
 
 @interface RewardsViewController : UIViewController <UITextFieldDelegate>
-
+{
+    MessageController *msg;
+}
 
 @property (strong,nonatomic) DownPicker *downPickerCat;
 @property (strong,nonatomic) DownPicker *downPickerItem;
@@ -35,5 +37,7 @@
 
 - (IBAction)addReward:(id)sender;
 - (IBAction)clearFields:(id)sender;
+
+-(void)getMenuItems:(id)sender;
 
 @end

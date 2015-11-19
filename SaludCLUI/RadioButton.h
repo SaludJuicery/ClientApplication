@@ -40,8 +40,8 @@
 
 // Find first radio with given tag and makes it selected.
 // All of other buttons in the group become deselected.
-
 -(void) setSelectedWithTag:(NSInteger)tag;
+
 -(void) deselectAllButtons;
 
 @end

@@ -7,20 +7,36 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DownPicker.h"
+#import "MessageController.h"
 
 @interface CreateMenuController : UIViewController
+{
+    MessageController *msg;
+}
 
 - (IBAction)submitButton:(id)sender;
 - (IBAction)clearButton:(id)sender;
-//- (void)displayMessage:(NSString *)msg;
+- (IBAction)newCategoryBtn:(id)sender;
+- (IBAction)addonBtn:(id)sender;
 
+@property(strong,nonatomic) NSMutableArray *categoryList;
+
+@property (strong,nonatomic) DownPicker *downPickerLoc;
+@property (strong,nonatomic) DownPicker *downPickerCat;
+
+@property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
 @property (weak, nonatomic) IBOutlet UIButton *submit;
 @property (weak, nonatomic) IBOutlet UIButton *clear;
+@property (weak, nonatomic) IBOutlet UIButton *addonBtn;
+
 @property (weak, nonatomic) IBOutlet UITextField *itemCat;
 @property (weak, nonatomic) IBOutlet UITextField *itemName;
-@property (weak, nonatomic) IBOutlet UITextField *itemPrice;
+@property (weak, nonatomic) IBOutlet UITextField *growler;
+@property (weak, nonatomic) IBOutlet UITextField *petite;
+@property (weak, nonatomic) IBOutlet UITextField *regular;
+@property (weak, nonatomic) IBOutlet UITextField *location;
+
 @property (weak, nonatomic) IBOutlet UITextView *itemDesc;
-@property (weak, nonatomic) IBOutlet UITextView *itemIngre;
-@property(weak,nonatomic) NSString *tempCat;
 
 @end

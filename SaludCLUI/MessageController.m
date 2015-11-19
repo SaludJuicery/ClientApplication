@@ -13,28 +13,25 @@
 
 
 -(void)displayMessage:(NSString *)msg {
-    
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Message"
-                          message:[NSString stringWithFormat:@"%@",msg]
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    
-    [alert show];
+
+UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
+message:[NSString stringWithFormat:@"%@",msg] delegate:self
+cancelButtonTitle:@"OK" otherButtonTitles:nil];
+
+[alert show];
 }
 
 /*
 -(void)deleteConfirmation:(NSString *)msg {
-    
-    UIAlertView *deleteConfirm = [[UIAlertView alloc]
-                          initWithTitle:@"Confirmation"
-                          message:[NSString stringWithFormat:@"%@",msg]
-                          delegate:self
-                          cancelButtonTitle:@"NO"
-                          otherButtonTitles:@"YES", nil];
-    
-    [deleteConfirm show];
+
+UIAlertView *deleteConfirm = [[UIAlertView alloc]
+initWithTitle:@"Confirmation"
+message:[NSString stringWithFormat:@"%@",msg]
+delegate:self
+cancelButtonTitle:@"NO"
+otherButtonTitles:@"YES", nil];
+
+[deleteConfirm show];
 }
 */
 @end

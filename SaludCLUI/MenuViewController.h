@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageController.h"
 
 @interface MenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
@@ -14,6 +15,7 @@
     NSMutableArray *pastCategory;
     NSMutableArray *autocompleteData;
     UITableView *autocompleteTableView;
+    MessageController *msg;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barButton;
@@ -23,7 +25,6 @@
 @property (nonatomic, retain) IBOutlet UITableView *autocompleteTableView;
 @property (nonatomic,retain) IBOutlet UITextField *nCategory;
 
--(void)displayErrorMsg:(NSString *)errMsg;
 
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring;
 
