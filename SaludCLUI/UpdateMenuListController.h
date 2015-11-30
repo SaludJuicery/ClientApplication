@@ -12,13 +12,13 @@
 
 @interface UpdateMenuListController : UIViewController <UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate>
 {
-    UIView *footerView;
+    UIView *viewFooter;
     MessageController *msg;
 }
 
 @property (strong,nonatomic) DownPicker *downPickerCat;
-@property (weak, nonatomic) IBOutlet UITextField *itemText;
-@property (weak, nonatomic) IBOutlet UITableView *itemListView;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCategory;
+@property (weak, nonatomic) IBOutlet UITableView *tblViewCategories;
 @property (strong,nonatomic) NSMutableArray *itemsArray;
 @property (weak, nonatomic) NSString *menuItem;
 @property (weak, nonatomic) NSString *catName;

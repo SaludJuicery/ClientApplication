@@ -7,10 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "MessageController.h"
+#import "TimerClass.h"
 
 @interface AppDelegate ()
-
+{
+    NSTimer *idleTimer;
+}
 @end
+
+#define maxIdleTimeSecs 60.0
 
 @implementation AppDelegate
 
@@ -18,6 +24,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     return YES;
+}
+
+- (void)application:(TimerClass *)application willSendTouchEvent:(UIEvent *)event {
+    //NSLog(@"touch event: I touched on %@", event.description);
+    
+    [self resetIdleTimer];
+}
+#pragma mark - Handling idle timeout
+
+- (void)resetIdleTimer {
+    if (idleTimer) {
+        [idleTimer invalidate];
+        //[idleTimer release];
+    }
+    
+    idleTimer = [NSTimer scheduledTimerWithTimeInterval:maxIdleTimeSecs target:self selector:@selector(idleTimerExceeded) userInfo:nil repeats:NO];
+}
+
+- (void)idleTimerExceeded {
+    
+    MessageController *msg = [[MessageController alloc] init];
+    [msg displayMessage:@"Idle Time Exceeded"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

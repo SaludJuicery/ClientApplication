@@ -25,6 +25,17 @@
 - (void)viewDidLoad {
 [super viewDidLoad];
     
+    int i;
+    for(i=1;i<=6;i++)
+    {
+        UITextField *textField=(UITextField *)[self.view viewWithTag:i];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+    }
+    
+    self.txtViewDesc.layer.cornerRadius = 5;
+    self.txtViewDesc.layer.borderWidth = 0.5f;
+    
+    self.txtViewDesc.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -40,7 +51,7 @@
         categoryList = [getCategory getCategories];
     }
     //Get the Categories from db
-    self.downPickerCat = [[DownPicker alloc] initWithTextField:_itemCat withData:categoryList];
+    self.downPickerCat = [[DownPicker alloc] initWithTextField:_txtFldCat withData:categoryList];
     
     
 // create the array of data for location and bind to location field
@@ -48,9 +59,18 @@ NSMutableArray* arrLoc = [[NSMutableArray alloc] init];
 [arrLoc addObject:@"ShadySide"];
 [arrLoc addObject:@"Sewickley"];
 [arrLoc addObject:@"Both"];
-self.downPickerLoc = [[DownPicker alloc] initWithTextField:self.location withData:arrLoc];
+self.downPickerLoc = [[DownPicker alloc] initWithTextField:self.txtFldLocation withData:arrLoc];
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+        if([text isEqualToString:@"\n"])
+        {
+                [textView resignFirstResponder];
+        }
+    return TRUE;
+    
+}
 
 - (void)didReceiveMemoryWarning {
 [super didReceiveMemoryWarning];
@@ -67,7 +87,8 @@ for(i=1;i<=6;i++)
 UITextField *textField=(UITextField *)[self.view viewWithTag:i];
 [textField setText:@""];
 }
-_itemDesc.text = @"";
+_txtViewDesc.text = @"";
+_txtFldLocation.text=@"";
 }
 
 /*Below function is used to submit the data as entered by the user*/
@@ -75,34 +96,34 @@ _itemDesc.text = @"";
 
 NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"^(?:|0|[1-9]\\d*)(?:\\.\\d*)?$" options:NSRegularExpressionCaseInsensitive error:NULL];
 
-NSTextCheckingResult *matchPetite = [regExp firstMatchInString:_petite.text options:0 range:NSMakeRange(0, [_petite.text length])];
-NSTextCheckingResult *matchRegular = [regExp firstMatchInString:_regular.text options:0 range:NSMakeRange(0, [_regular.text length])];
-NSTextCheckingResult *matchGrowler = [regExp firstMatchInString:_growler.text options:0 range:NSMakeRange(0, [_growler.text length])];
+NSTextCheckingResult *matchPetite = [regExp firstMatchInString:_txtFldPetite.text options:0 range:NSMakeRange(0, [_txtFldPetite.text length])];
+NSTextCheckingResult *matchRegular = [regExp firstMatchInString:_txtFldRegular.text options:0 range:NSMakeRange(0, [_txtFldRegular.text length])];
+NSTextCheckingResult *matchGrowler = [regExp firstMatchInString:_txtFldGrowler.text options:0 range:NSMakeRange(0, [_txtFldGrowler.text length])];
 
 NSRegularExpression *regExp1 = [NSRegularExpression regularExpressionWithPattern:@"^(\\w+\\s?\\+ )*\\w+$" options:NSRegularExpressionCaseInsensitive error:NULL];
 
-NSTextCheckingResult *matchDesc = [regExp1 firstMatchInString:_itemDesc.text.lowercaseString options:0 range:NSMakeRange(0, [_itemDesc.text length])];
+NSTextCheckingResult *matchDesc = [regExp1 firstMatchInString:_txtViewDesc.text.lowercaseString options:0 range:NSMakeRange(0, [_txtViewDesc.text length])];
 
 
 msg = [[MessageController alloc] init];
 
-if ([_itemCat.text isEqualToString:@""])
+if ([_txtFldCat.text isEqualToString:@""])
 {
 [msg displayMessage:@"Item Category: Field cannot be empty."];
 
 }
-else if([_itemName.text isEqualToString:@""]){
+else if([_txtFldName.text isEqualToString:@""]){
 [msg displayMessage:@"Item Name: Field cannot be empty."];
 
 }
-else if([_itemDesc.text isEqualToString:@""]){
+else if([_txtViewDesc.text isEqualToString:@""]){
 [msg displayMessage:@"Item Ingredients: Field cannot be empty."];
 
 }
 else if(!matchDesc){
 [msg displayMessage:@"Item Ingredients: Please enter values separated by '+'. Example:'word + word'"];
 }
-else if([_petite.text isEqualToString:@""]){
+else if([_txtFldPetite.text isEqualToString:@""]){
 [msg displayMessage:@"Petite Price: Field cannot be empty."];
 
 }
@@ -110,7 +131,7 @@ else if(!matchPetite){
 [msg displayMessage:@"Petite Price: Please enter only numbers.Ex. 99.99"];
 
 }
-else if([_regular.text isEqualToString:@""]){
+else if([_txtFldRegular.text isEqualToString:@""]){
 [msg displayMessage:@"Regular Price: Field cannot be empty."];
 
 }
@@ -118,7 +139,7 @@ else if(!matchRegular){
 [msg displayMessage:@"Regular Price: Please enter only numbers.Ex. 99.99"];
 
 }
-else if([_growler.text isEqualToString:@""]){
+else if([_txtFldGrowler.text isEqualToString:@""]){
 [msg displayMessage:@"Growler Price: Field cannot be empty."];
 
 }
@@ -127,12 +148,12 @@ else if(!matchGrowler){
 }
 else{
 
-NSString *name = _itemName.text;
-NSString *cate = _itemCat.text;
-NSString *desc = _itemDesc.text;
-NSString *regular = _regular.text;
-NSString *petite = _petite.text;
-NSString *growler = _growler.text;
+NSString *name = _txtFldName.text;
+NSString *cate = _txtFldCat.text;
+NSString *desc = _txtViewDesc.text;
+NSString *regular = _txtFldRegular.text;
+NSString *petite = _txtFldPetite.text;
+NSString *growler = _txtFldGrowler.text;
 
 NSString *shFlag ,*swFlag;
 NSString *locName = [self.downPickerLoc text];
@@ -157,6 +178,7 @@ swFlag = @"TRUE";
 NSArray *keys = [NSArray arrayWithObjects:@"item_name",@"category",@"petite",@"regular",@"growler",@"description",@"is_available_shady",@"is_available_sewickley", nil];
     
 NSArray *objects = [NSArray arrayWithObjects:name,cate,petite,regular,growler,desc,shFlag,swFlag, nil];
+    
     
 GetUrl *href = [[GetUrl alloc] init];
 NSString *url = [href getHref:4];

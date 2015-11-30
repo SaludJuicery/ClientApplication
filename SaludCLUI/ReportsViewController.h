@@ -10,14 +10,17 @@
 #import "DownPicker.h"
 #import "MessageController.h"
 
-@interface ReportsViewController : UIViewController
+
+@interface ReportsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 {
     MessageController *msg;
 }
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *reportButton;
+
+@property (weak, nonatomic) IBOutlet UITableView *containerview;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
 @property (strong,nonatomic) DownPicker *downPickerlocation;
-@property (strong,nonatomic) DownPicker *downPickerreport;
-@property (weak, nonatomic) IBOutlet UITextField *locOption;
-@property (weak, nonatomic) IBOutlet UITextField *reportOption;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldlocation;
+
 
 @end

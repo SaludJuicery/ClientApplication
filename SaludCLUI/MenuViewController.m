@@ -19,16 +19,15 @@
 @end
 
 @implementation MenuViewController
-@synthesize category = category;
+
 @synthesize pastCategory;
 @synthesize autocompleteData;
-@synthesize autocompleteTableView;
 
 - (void)viewDidLoad {
 [super viewDidLoad];
 
-_barButton.target=self.revealViewController;
-_barButton.action=@selector(revealToggle:);
+_btnMenu.target=self.revealViewController;
+_btnMenu.action=@selector(revealToggle:);
 [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     //Get the Categories from db
@@ -101,30 +100,6 @@ autocompleteTableView.hidden = YES;
     }
 }
 
-- (IBAction)addNewCategory:(id)sender {
-
-    msg = [[MessageController alloc] init];
-    
-if ([_nCategory.text isEqualToString:@""])
-{
-
-    [msg displayMessage:@"New Category Name cannot be empty"];
-
-}
-else
-{
-// Clean up UI
-[category resignFirstResponder];
-autocompleteTableView.hidden = YES;
-
-// Add the Category to the list of entered categories as long as it isn't already there
-if (![pastCategory containsObject:_nCategory.text]) {
-[pastCategory addObject:_nCategory.text];
-}
-}
-
-}
-
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
 
 // Put anything that starts with this substring into the autocompleteUrls array
@@ -137,25 +112,6 @@ if (substringRange.location == 0) {
 }
 }
 [autocompleteTableView reloadData];
-}
-
-- (IBAction)checkContinue:(UIButton *)sender {
-
-    msg = [[MessageController alloc] init];
-    
-NSString *temp =category.text;
-
-if([temp isEqual:@""])
-{
-[msg displayMessage:@"Category Name cannot be empty"];
-[category becomeFirstResponder];
-
-}
-else{
-//This code will help to navigate from Menu types to Create Menu Screen
-[self performSegueWithIdentifier:@"sw_contmenu" sender: self];
-}
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -219,8 +175,8 @@ return cell;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-category.text = selectedCell.textLabel.text;
+//UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+//category.text = selectedCell.textLabel.text;
 
 //  [self goPressed];
 

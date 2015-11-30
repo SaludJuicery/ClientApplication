@@ -19,18 +19,18 @@
 @property (strong,nonatomic) DownPicker *downPickerCat;
 @property (strong,nonatomic) DownPicker *downPickerItem;
 @property (strong,nonatomic) DownPicker *downPickerLoc;
-@property (weak, nonatomic) IBOutlet UITextField *textCategory;
-@property (weak, nonatomic) IBOutlet UITextField *textLocation;
-@property (weak, nonatomic) IBOutlet UITextField *textItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *rewardsButton;
-@property (weak, nonatomic) IBOutlet UITextField *textAmount;
-@property (weak, nonatomic) IBOutlet UITextField *startDate;
-@property (weak, nonatomic) IBOutlet UITextField *endDate;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCategory;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldLocation;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldAmount;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldStartDate;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldEndDate;
 
-@property (weak, nonatomic) IBOutlet UIButton *radioPrice;
-@property (weak, nonatomic) IBOutlet UIButton *radioPercent;
-@property (weak, nonatomic) IBOutlet UIButton *startcheckbox;
-@property (weak, nonatomic) IBOutlet UIButton *endcheckbox;
+@property (weak, nonatomic) IBOutlet UIButton *btnRadioPrice;
+@property (weak, nonatomic) IBOutlet UIButton *btnRadioPercent;
+@property (weak, nonatomic) IBOutlet UIButton *btnStartCheckbox;
+@property (weak, nonatomic) IBOutlet UIButton *btnEndCheckbox;
 
 -(IBAction)onRadioBtn:(id)sender;
 -(IBAction)onCheckBoxBtn:(id)sender;

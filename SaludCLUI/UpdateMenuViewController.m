@@ -25,12 +25,23 @@
 [super viewDidLoad];
 
 //Get the item name
-_itemName.text = _tempName;
+_txtFldItem.text = _tempName;
     
 //Get the category name
-_itemCat.text = _tempCat;
+_txtFldItem.text = _tempCat;
 
+    int i;
+    
+    for(i=1;i<=5;i++)
+    {
+        UITextField *textField=(UITextField *)[self.view viewWithTag:i];
+       textField.borderStyle = UITextBorderStyleRoundedRect;
+    }
 
+    self.txtViewIngre.layer.cornerRadius = 5;
+    self.txtViewIngre.layer.borderWidth = 0.5f;
+    self.txtViewIngre.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    
 //Call the function getItem to assign item details to textfields
     [self getItem:_tempName forCategory:_tempCat];
     
@@ -39,13 +50,13 @@ NSMutableArray* arrLoc = [[NSMutableArray alloc] init];
 [arrLoc addObject:@"ShadySide"];
 [arrLoc addObject:@"Sewickley"];
 [arrLoc addObject:@"Both"];
-self.downPickerLoc = [[DownPicker alloc] initWithTextField:self.itemLoc withData:arrLoc];
+self.downPickerLoc = [[DownPicker alloc] initWithTextField:self.txtFldLoc withData:arrLoc];
 
 //Below border style for item ingredients
-_itemIngre.layer.cornerRadius=5.0f;
+_txtViewIngre.layer.cornerRadius=5.0f;
 //_itemIngre.layer.masksToBounds=YES;
-_itemIngre.layer.borderColor=[[UIColor lightGrayColor]CGColor];
-_itemIngre.layer.borderWidth= 1.0f;
+_txtViewIngre.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+_txtViewIngre.layer.borderWidth= 1.0f;
 
 }
 
@@ -71,27 +82,27 @@ _itemIngre.layer.borderWidth= 1.0f;
         NSDictionary *itemDict = [menuItems objectAtIndex:0];
 
     
-    _petitePrice.text = [[itemDict objectForKey:@"petite"] stringValue];
-    _regularPrice.text = [[itemDict objectForKey:@"regular"] stringValue];
-        _growlerPrice.text = [[itemDict objectForKey:@"growler"] stringValue];
+    _txtFldPetite.text = [[itemDict objectForKey:@"petite"] stringValue];
+    _txtFldRegular.text = [[itemDict objectForKey:@"regular"] stringValue];
+        _txtFldGrowler.text = [[itemDict objectForKey:@"growler"] stringValue];
     
 
-    _itemIngre.text = [itemDict objectForKey:@"description"];
+    _txtViewIngre.text = [itemDict objectForKey:@"description"];
     
         NSString *shLoc = [itemDict objectForKey:@"is_available_shady"];
         NSString *swLoc = [itemDict objectForKey:@"is_available_sewickley"];
 
         if([shLoc isEqualToString:@"true"] && [swLoc isEqualToString:@"true"])
            {
-               _itemLoc.text = @"Both";
+               _txtFldLoc.text = @"Both";
            }
         else if([shLoc isEqualToString:@"true"] && [swLoc isEqualToString:@"false"])
         {
-            _itemLoc.text = @"ShadySide";
+            _txtFldLoc.text = @"ShadySide";
         }
         else 
         {
-            _itemLoc.text = @"Sewickley";
+            _txtFldLoc.text = @"Sewickley";
         }
     }
 }
@@ -103,31 +114,31 @@ msg = [[MessageController alloc] init];
 
 NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"^(?:|0|[1-9]\\d*)(?:\\.\\d*)?$" options:NSRegularExpressionCaseInsensitive error:NULL];
 
-    NSTextCheckingResult *matchPetite = [regExp firstMatchInString:_petitePrice.text options:0 range:NSMakeRange(0, [_petitePrice.text length])];
-    NSTextCheckingResult *matchRegular = [regExp firstMatchInString:_regularPrice.text options:0 range:NSMakeRange(0, [_regularPrice.text length])];
-    NSTextCheckingResult *matchGrowler = [regExp firstMatchInString:_growlerPrice.text options:0 range:NSMakeRange(0, [_growlerPrice.text length])];
+    NSTextCheckingResult *matchPetite = [regExp firstMatchInString:_txtFldPetite.text options:0 range:NSMakeRange(0, [_txtFldPetite.text length])];
+    NSTextCheckingResult *matchRegular = [regExp firstMatchInString:_txtFldRegular.text options:0 range:NSMakeRange(0, [_txtFldRegular.text length])];
+    NSTextCheckingResult *matchGrowler = [regExp firstMatchInString:_txtFldGrowler.text options:0 range:NSMakeRange(0, [_txtFldGrowler.text length])];
 
     NSRegularExpression *regExp1 = [NSRegularExpression regularExpressionWithPattern:@"^(\\w+\\s?\\+ )*\\w+$" options:NSRegularExpressionCaseInsensitive error:NULL];
     
-    NSTextCheckingResult *matchIngre = [regExp1 firstMatchInString:_itemIngre.text.lowercaseString options:0 range:NSMakeRange(0, [_itemIngre.text length])];
+    NSTextCheckingResult *matchIngre = [regExp1 firstMatchInString:_txtViewIngre.text.lowercaseString options:0 range:NSMakeRange(0, [_txtViewIngre.text length])];
     
-    if ([_itemCat.text isEqualToString:@""])
+    if ([_txtFldCategory.text isEqualToString:@""])
     {
         [msg displayMessage:@"Item Category: Field cannot be empty."];
         
     }
-    else if([_itemName.text isEqualToString:@""]){
+    else if([_txtFldItem.text isEqualToString:@""]){
         [msg displayMessage:@"Item Name: Field cannot be empty."];
         
     }
-    else if([_itemIngre.text isEqualToString:@""]){
+    else if([_txtViewIngre.text isEqualToString:@""]){
         [msg displayMessage:@"Item Description: Field cannot be empty."];
         
     }
     else if(!matchIngre){
         [msg displayMessage:@"Item Description: Please enter values separated by '+'. Example:'word + word'"];
     }
-    else if([_petitePrice.text isEqualToString:@""]){
+    else if([_txtFldPetite.text isEqualToString:@""]){
         [msg displayMessage:@"Petite Price: Field cannot be empty."];
         
     }
@@ -135,7 +146,7 @@ NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:
         [msg displayMessage:@"Petite Price: Please enter only numbers.Ex. 99.99"];
         
     }
-    else if([_regularPrice.text isEqualToString:@""]){
+    else if([_txtFldRegular.text isEqualToString:@""]){
         [msg displayMessage:@"Regular Price: Field cannot be empty."];
         
     }
@@ -143,7 +154,7 @@ NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:
         [msg displayMessage:@"Regular Price: Please enter only numbers.Ex. 99.99"];
         
     }
-    else if([_growlerPrice.text isEqualToString:@""]){
+    else if([_txtFldGrowler.text isEqualToString:@""]){
         [msg displayMessage:@"Growler Price: Field cannot be empty."];
         
     }
@@ -152,21 +163,21 @@ NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:
     }
     else{
 
-        NSString *name = _itemName.text;
-        NSString *cate = _itemCat.text;
-        NSString *ingre = _itemIngre.text;
-        NSString *regular = _regularPrice.text;
-        NSString *petite = _petitePrice.text;
-        NSString *growler = _growlerPrice.text;
+        NSString *name = _txtFldItem.text;
+        NSString *cate = _txtFldCategory.text;
+        NSString *ingre = _txtViewIngre.text;
+        NSString *regular = _txtFldRegular.text;
+        NSString *petite = _txtFldPetite.text;
+        NSString *growler = _txtFldGrowler.text;
         
         BOOL shFlag ,swFlag;
         
-        if([_itemLoc.text isEqualToString:@"Shadyside"])
+        if([_txtFldLoc.text isEqualToString:@"Shadyside"])
         {
             shFlag = TRUE;
             swFlag = FALSE;
         }
-        else if([_itemLoc.text isEqualToString:@"Sewickley"])
+        else if([_txtFldLoc.text isEqualToString:@"Sewickley"])
         {
             shFlag = FALSE;
             swFlag = TRUE;

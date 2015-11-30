@@ -12,18 +12,16 @@
 
 @interface LoginViewController : UIViewController {
     BOOL checked;
-    IBOutlet UIButton *checkBoxButton;
+    IBOutlet UIButton *btnCheckBox;
     PDKeychainBindings *bindings;
     MessageController *msg;
 }
 - (IBAction)checkBoxButton:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnLogin;
 
-@property (weak, nonatomic) IBOutlet UIButton *userLogin;
-
-@property (weak, nonatomic) IBOutlet UITextField *password;
-
-@property (weak, nonatomic) IBOutlet UITextField *username;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldPassword;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldUsername;
 
 @end
 

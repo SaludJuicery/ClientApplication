@@ -11,25 +11,18 @@
 
 @interface MenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
-    IBOutlet UITextField *category;
     NSMutableArray *pastCategory;
     NSMutableArray *autocompleteData;
     UITableView *autocompleteTableView;
     MessageController *msg;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *barButton;
-@property (nonatomic, retain) IBOutlet UITextField *category;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
+
 @property (nonatomic, retain) NSMutableArray *pastCategory;
 @property (nonatomic, retain) NSMutableArray *autocompleteData;
-@property (nonatomic, retain) IBOutlet UITableView *autocompleteTableView;
-@property (nonatomic,retain) IBOutlet UITextField *nCategory;
 
 
 - (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring;
-
-- (IBAction)checkContinue:(id)sender;
-
-- (IBAction)addNewCategory:(id)sender;
 
 @end

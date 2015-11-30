@@ -28,7 +28,7 @@ NSMutableArray* arrLoc = [[NSMutableArray alloc] init];
 [arrLoc addObject:@"Shadyside"];
 [arrLoc addObject:@"Sewickly"];
 [arrLoc addObject:@"Both Location"];
-self.downPickerloc= [[DownPicker alloc] initWithTextField:self.textLoc withData:arrLoc];
+self.downPickerloc= [[DownPicker alloc] initWithTextField:self.txtFldLoc withData:arrLoc];
 
 // Bind the open or close status to the deropdown of each day
 NSMutableArray* open_close = [[NSMutableArray alloc] init];

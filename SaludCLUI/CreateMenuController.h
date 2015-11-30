@@ -10,7 +10,7 @@
 #import "DownPicker.h"
 #import "MessageController.h"
 
-@interface CreateMenuController : UIViewController
+@interface CreateMenuController : UIViewController <UITextViewDelegate>
 {
     MessageController *msg;
 }
@@ -25,18 +25,18 @@
 @property (strong,nonatomic) DownPicker *downPickerLoc;
 @property (strong,nonatomic) DownPicker *downPickerCat;
 
-@property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
-@property (weak, nonatomic) IBOutlet UIButton *submit;
-@property (weak, nonatomic) IBOutlet UIButton *clear;
-@property (weak, nonatomic) IBOutlet UIButton *addonBtn;
+@property (weak, nonatomic) IBOutlet UIButton *btnNewCategory;
+@property (weak, nonatomic) IBOutlet UIButton *btnCreateItem;
+@property (weak, nonatomic) IBOutlet UIButton *btnClear;
+@property (weak, nonatomic) IBOutlet UIButton *btnAddon;
 
-@property (weak, nonatomic) IBOutlet UITextField *itemCat;
-@property (weak, nonatomic) IBOutlet UITextField *itemName;
-@property (weak, nonatomic) IBOutlet UITextField *growler;
-@property (weak, nonatomic) IBOutlet UITextField *petite;
-@property (weak, nonatomic) IBOutlet UITextField *regular;
-@property (weak, nonatomic) IBOutlet UITextField *location;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCat;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldName;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldGrowler;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldPetite;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldRegular;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldLocation;
 
-@property (weak, nonatomic) IBOutlet UITextView *itemDesc;
+@property (weak, nonatomic) IBOutlet UITextView *txtViewDesc;
 
 @end

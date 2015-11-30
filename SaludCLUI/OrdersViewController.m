@@ -8,26 +8,50 @@
 
 #import "OrdersViewController.h"
 #import "SWRevealViewController.h"
-#import "SIOSocket.h"
+#import "AppDelegate.h"
 
 @interface OrdersViewController ()
-@property SIOSocket *socket;
-@property BOOL socketIsConnected;
 @end
+
 
 @implementation OrdersViewController
 
 - (void)viewDidLoad {
-[super viewDidLoad];
 
-_ordersButton.target=self.revealViewController;
-_ordersButton.action=@selector(revealToggle:);
+    [super viewDidLoad];
+    //TimerClass *timer = [[TimerClass alloc] init];
+    //[timer resetIdleTimer];
+    
+_btnMenu.target=self.revealViewController;
+_btnMenu.action=@selector(revealToggle:);
 [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
-    /*[SIOSocket socketWithHost: @"http://localhost:8000" response: ^(SIOSocket *socket) {
-        self.socket = socket;
-    }];*/
+      
+    messages = [[NSMutableArray alloc] init];
     
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"ChatCellIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    NSString *s = (NSString *) [messages objectAtIndex:indexPath.row];
+    cell.textLabel.text = s;
+    return cell;
+    
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return messages.count;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,5 +68,4 @@ _ordersButton.action=@selector(revealToggle:);
 // Pass the selected object to the new view controller.
 }
 */
-
 @end

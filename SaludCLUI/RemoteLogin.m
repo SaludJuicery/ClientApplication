@@ -9,6 +9,7 @@
 #import "RemoteLogin.h"
 
 @implementation RemoteLogin
+
 -(int) getConnection:(NSArray*)keys forobjects:(NSArray*)values forurl:(NSString*) getUrl
 {
 NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:values forKeys:keys];
@@ -32,6 +33,7 @@ NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 NSError *errorReturned = nil;
 NSURLResponse *theResponse =[[NSURLResponse alloc]init];
 NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&theResponse error:&errorReturned];
+    
 
 
 if (errorReturned) {

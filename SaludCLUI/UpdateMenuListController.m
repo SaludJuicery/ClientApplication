@@ -20,11 +20,13 @@
 @end
 
 @implementation UpdateMenuListController
-@synthesize itemsArray,itemListView;
+@synthesize itemsArray,tblViewCategories;
 
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    
+    _txtFldCategory.borderStyle = UITextBorderStyleRoundedRect;
     
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -40,7 +42,7 @@
     //Get the menu categories from db and bind to downpicker textfield
     GetCategories *getCategories = [[GetCategories alloc] init];
     NSMutableArray* categories = [getCategories getCategories];
-    self.downPickerCat = [[DownPicker alloc] initWithTextField:self.itemText withData:categories];
+    self.downPickerCat = [[DownPicker alloc] initWithTextField:self.txtFldCategory withData:categories];
     }
     
     //This function will get open and close time based on location selected
@@ -49,12 +51,12 @@
                  forControlEvents:UIControlEventValueChanged];
     
     //Tableview Delegation and DataSource binding
-    itemListView.delegate=self;
-    itemListView.dataSource=self;
-    [self.view addSubview:itemListView];
+tblViewCategories.delegate=self;
+tblViewCategories.dataSource=self;
+    [self.view addSubview:tblViewCategories];
 
     // This line will only show tableview visible cells
-    itemListView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+tblViewCategories.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
 }
 
@@ -79,7 +81,7 @@
     
     self.itemsArray = menuItems;
         
-    [itemListView reloadData];
+    [tblViewCategories reloadData];
     }
     
 }
@@ -129,9 +131,9 @@ return 44;
 // Notice: this will work only for one section within the table view
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 
-if(footerView == nil) {
+if(viewFooter == nil) {
 //allocate the view if it doesn't exist yet
-footerView  = [[UIView alloc] init];
+viewFooter  = [[UIView alloc] init];
 
 //create the button
 UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -150,19 +152,19 @@ UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 forControlEvents:UIControlEventTouchUpInside];
 
 //Add the button to the uitableview footer
-[footerView addSubview:button];
+[viewFooter addSubview:button];
 }
 
 //return the view for the footer
-return footerView;
+return viewFooter;
 }
 
 -(void)showItems:(id) sender {
     
-NSArray *selectedCells = [itemListView indexPathsForSelectedRows];
+NSArray *selectedCells = [tblViewCategories indexPathsForSelectedRows];
 msg = [[MessageController alloc] init];
 
-if([_itemText.text isEqualToString:@""])
+if([_txtFldCategory.text isEqualToString:@""])
 {
 [msg displayMessage:@"Category Field cannot be empty."];
 }

@@ -10,13 +10,18 @@
 #import "DownPicker.h"
 #import "MessageController.h"
 
-@interface OrdersViewController : UIViewController
+@interface OrdersViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 {
+    NSInputStream *InputStream;
+    NSOutputStream *OutputStream;
+    NSMutableData *OutputData;
     MessageController *msg;
+    NSMutableArray * messages;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *ordersButton;
-@property (weak, nonatomic) IBOutlet UITableView *pendingOrdersList;
+//- (void)resetIdleTimer;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
+@property (weak, nonatomic) IBOutlet UITableView *tblViewOrders;
 
 
 

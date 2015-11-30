@@ -13,20 +13,18 @@
 @interface DeleteViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     NSMutableArray *autoCompleteData;
     NSMutableArray *selectedObjects;
-    UITableView *autoCompleteView;
-    UIView *footerView;
+    UITableView *tblViewItems;
+    UIView *viewFooter;
     MessageController *msg;
 
 }
 
-@property (strong,nonatomic) DownPicker *downPicker;
-//@property (strong,nonatomic) DownPicker *downPicker1;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (strong,nonatomic) DownPicker *downPickerCat;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCategory;
 @property (nonatomic, retain) NSMutableArray *autoCompleteData;
 @property (nonatomic, retain) NSMutableArray *selectedObjects;
-@property (nonatomic, retain) IBOutlet UITableView *autoCompleteView;
-//@property (weak, nonatomic) IBOutlet UITextField *selectLoc;
-@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (nonatomic, retain) IBOutlet UITableView *tblViewItems;
+@property (weak, nonatomic) IBOutlet UIButton *btnDelete;
 
 - (IBAction)deleteItems:(id)sender;
 

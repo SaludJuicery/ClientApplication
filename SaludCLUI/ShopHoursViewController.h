@@ -14,26 +14,26 @@
     UIView *footerView;
     MessageController *msg;
 }
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *hoursButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
 
 @property (strong,nonatomic) DownPicker *downPickerLoc;
 @property (strong,nonatomic) DownPicker *downPickerDay;
 @property (strong,nonatomic) DownPicker *downPickerStatus;
 
-@property (weak, nonatomic) IBOutlet UITextField *textStatus;
-@property (weak, nonatomic) IBOutlet UITextField *textLoc;
-@property (weak, nonatomic) IBOutlet UITextField *textDay;
-@property (weak, nonatomic) IBOutlet UITextField *textOpen;
-@property (weak, nonatomic) IBOutlet UITextField *textClose;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldStatus;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldLoc;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldDay;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldOpenTime;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCloseTime;
 
 
 @property (weak,nonatomic) NSArray *jsonArray;
 
-@property (weak, nonatomic) IBOutlet UIButton *updateBtn;
-- (IBAction)clearFields:(id)sender;
-
+@property (weak, nonatomic) IBOutlet UIButton *btnUpdate;
 - (IBAction)updateHours:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *clear;
+@property (weak, nonatomic) IBOutlet UIButton *btnClear;
+
+- (IBAction)clearFields:(id)sender;
 
 @end

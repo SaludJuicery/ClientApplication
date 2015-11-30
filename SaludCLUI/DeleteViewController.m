@@ -23,13 +23,15 @@
 
 @implementation DeleteViewController
 @synthesize autoCompleteData;
-@synthesize autoCompleteView;
+@synthesize tblViewItems;
 @synthesize selectedObjects;
 
 
 - (void)viewDidLoad {
 [super viewDidLoad];
 
+    _txtFldCategory.borderStyle = UITextBorderStyleRoundedRect;
+    
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
@@ -44,36 +46,36 @@
     GetCategories  *getCategory = [[GetCategories alloc] init];
     NSMutableArray *categoryArray = [getCategory getCategories];
     
-    self.downPicker = [[DownPicker alloc] initWithTextField:self.textField withData:categoryArray];
+    self.downPickerCat = [[DownPicker alloc] initWithTextField:self.txtFldCategory withData:categoryArray];
     }
  //hide the delete custom button if items generated is fewer
 if(self.autoCompleteData.count < 10)
 {
-[self.deleteBtn setHidden:YES];
+[self.btnDelete setHidden:YES];
 }
 else
 {
-[self.deleteBtn setHidden:NO];
+[self.btnDelete setHidden:NO];
 
 }
 
 /*
 * Below code is used to hide the table view once the menu screen loads.
 */
-autoCompleteView.delegate = self;
-autoCompleteView.dataSource = self;
-autoCompleteView.scrollEnabled = YES;
-autoCompleteView.hidden = NO;
-[autoCompleteView setEditing:YES animated:YES];
+tblViewItems.delegate = self;
+tblViewItems.dataSource = self;
+tblViewItems.scrollEnabled = YES;
+tblViewItems.hidden = NO;
+[tblViewItems setEditing:YES animated:YES];
 
 
 /* This line will only show tableview visible cells*/
-self.autoCompleteView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+self.tblViewItems.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
-//Below line is to show the autocompleteview in the screen
-[self.view addSubview:autoCompleteView];
+//Below line is to show the tblViewItems in the screen
+[self.view addSubview:tblViewItems];
 
-[self.downPicker addTarget:self
+[self.downPickerCat addTarget:self
 action:@selector(getMenuItems:)
 forControlEvents:UIControlEventValueChanged];
 
@@ -83,11 +85,11 @@ forControlEvents:UIControlEventValueChanged];
 
     GetMenuItems *getMenuItems = [[GetMenuItems alloc] init];
     
-    NSMutableArray *getItems = [getMenuItems getMenuItems:[self.downPicker text]];
+    NSMutableArray *getItems = [getMenuItems getMenuItems:[self.downPickerCat text]];
     
     self.autoCompleteData = getItems;
 
-    [autoCompleteView reloadData];
+    [tblViewItems reloadData];
 
 }
 
@@ -134,9 +136,9 @@ return 44;
 // Notice: this will work only for one section within the table view
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 
-if(footerView == nil) {
+if(viewFooter == nil) {
 //allocate the view if it doesn't exist yet
-footerView  = [[UIView alloc] init];
+viewFooter  = [[UIView alloc] init];
 
 //create the button
 UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -166,13 +168,13 @@ cell.textLabel.text = @"";
 if(self.autoCompleteData.count < 10)
 {
 //add the empty cell and button to the uitableview footer
-[footerView addSubview:cell];
-[footerView addSubview:button];
+[viewFooter addSubview:cell];
+[viewFooter addSubview:button];
 }
 }
 
 //return the view for the footer
-return footerView;
+return viewFooter;
 }
 
 
@@ -204,10 +206,10 @@ return YES;
 //Below code is for deleting multiple items at once
 - (IBAction)deleteItems:(id)sender {
 
-NSArray *selectedCells = [self.autoCompleteView indexPathsForSelectedRows];
+NSArray *selectedCells = [self.tblViewItems indexPathsForSelectedRows];
 msg = [[MessageController alloc] init];
 
-if ([_textField.text isEqualToString:@""])
+if ([_txtFldCategory.text isEqualToString:@""])
 {
 [msg displayMessage:@"Category Field cannot be empty."];
 }
@@ -240,7 +242,7 @@ if([title isEqualToString:@"YES"])
     
 msg = [[MessageController alloc]init];
 
-NSArray *selectedCells = [self.autoCompleteView indexPathsForSelectedRows];
+NSArray *selectedCells = [self.tblViewItems indexPathsForSelectedRows];
     
 NSMutableIndexSet *indicesToDelete  = [[NSMutableIndexSet alloc] init];
 
@@ -255,15 +257,15 @@ for (NSIndexPath *indexPath in selectedCells) {
     
 //Below code is for manual Delete Button
 [autoCompleteData removeObjectsAtIndexes:indicesToDelete];
-[autoCompleteView beginUpdates];
-[autoCompleteView deleteRowsAtIndexPaths:selectedCells withRowAnimation:UITableViewRowAnimationAutomatic];
-[autoCompleteView endUpdates];
-[autoCompleteView reloadData];
+[tblViewItems beginUpdates];
+[tblViewItems deleteRowsAtIndexPaths:selectedCells withRowAnimation:UITableViewRowAnimationAutomatic];
+[tblViewItems endUpdates];
+[tblViewItems reloadData];
 
 
 //Generate Objects and Keys to pass to url
 NSArray *keys = [NSArray arrayWithObjects:@"category",@"menuItemsToDelete", nil];
-NSArray *objects = [NSArray arrayWithObjects:_textField.text, itemsToDelete, nil];
+NSArray *objects = [NSArray arrayWithObjects:_txtFldCategory.text, itemsToDelete, nil];
     
 //Get the Delete url from plist file
 GetUrl *href = [[GetUrl alloc] init];

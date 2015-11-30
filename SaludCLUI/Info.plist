@@ -2,28 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Urls</key>
-	<array>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/login</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/logout</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/insert</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/categories/get</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/insert</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/menuItems/get</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/update</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItems/delete</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/addons/insert</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/insert</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/delete</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/update</string>
-		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/get</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>Vanguards.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -60,6 +44,22 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>Urls</key>
+	<array>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/login</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/logout</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/insert</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/categories/get</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/insert</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/menuItems/get</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/update</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItems/delete</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/addons/insert</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/insert</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/delete</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/update</string>
+		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/get</string>
 	</array>
 </dict>
 </plist>

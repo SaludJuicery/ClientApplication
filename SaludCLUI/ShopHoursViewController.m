@@ -20,14 +20,20 @@
 @end
 
 @implementation ShopHoursViewController
-@synthesize textStatus,textClose,textOpen;
+@synthesize txtFldStatus,txtFldCloseTime,txtFldOpenTime;
 
 - (void)viewDidLoad {
 [super viewDidLoad];
 // Do any additional setup after loading the view.
-
-_hoursButton.target=self.revealViewController;
-_hoursButton.action=@selector(revealToggle:);
+    int i;
+    for(i=1;i<=5;i++)
+    {
+        UITextField *textField=(UITextField *)[self.view viewWithTag:i];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+    }
+    
+_btnMenu.target=self.revealViewController;
+_btnMenu.action=@selector(revealToggle:);
 [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     // create the array of data for location and bind to location field
@@ -35,7 +41,7 @@ _hoursButton.action=@selector(revealToggle:);
     [locArray addObject:@"Shadyside"];
     [locArray addObject:@"Sewickly"];
     [locArray addObject:@"Both Location"];
-    self.downPickerLoc= [[DownPicker alloc] initWithTextField:self.textLoc withData:locArray];
+    self.downPickerLoc= [[DownPicker alloc] initWithTextField:self.txtFldLoc withData:locArray];
    
     // create the array of data for day and bind to location field
     NSMutableArray* dayArray = [[NSMutableArray alloc] init];
@@ -47,13 +53,13 @@ _hoursButton.action=@selector(revealToggle:);
     [dayArray addObject:@"Saturday"];
     [dayArray addObject:@"Sunday"];
 
-    self.downPickerDay= [[DownPicker alloc] initWithTextField:self.textDay withData:dayArray];
+    self.downPickerDay= [[DownPicker alloc] initWithTextField:self.txtFldDay withData:dayArray];
     
     // Bind the open or close status to the deropdown of each day
     NSMutableArray* open_close = [[NSMutableArray alloc] init];
     [open_close addObject:@"open"];
     [open_close addObject:@"close"];
-    self.downPickerStatus= [[DownPicker alloc] initWithTextField:self.textStatus withData:open_close];
+    self.downPickerStatus= [[DownPicker alloc] initWithTextField:self.txtFldStatus withData:open_close];
     
     //This function will get open and close time based on location selected
     [self.downPickerLoc addTarget:self
@@ -114,9 +120,9 @@ _hoursButton.action=@selector(revealToggle:);
         
         NSDictionary *itemDict = [hoursArray objectAtIndex:0];
         
-        textOpen.text = [itemDict objectForKey:@"open_time"];
-        textClose.text = [itemDict objectForKey:@"close_time"];
-        textStatus.text = ([[itemDict objectForKey:@"is_open"] isEqualToString:@"open"])?@"open":@"close";
+        txtFldOpenTime.text = [itemDict objectForKey:@"open_time"];
+        txtFldCloseTime.text = [itemDict objectForKey:@"close_time"];
+        txtFldStatus.text = ([[itemDict objectForKey:@"is_open"] isEqualToString:@"open"])?@"open":@"close";
 
     }
     }
@@ -165,11 +171,11 @@ _hoursButton.action=@selector(revealToggle:);
     {
         [msg displayMessage:@"Please select a day..."];
     }
-    else if (![self validateString:textOpen.text])
+    else if (![self validateString:txtFldOpenTime.text])
     {
         [msg displayMessage:@"Please enter a valid shop open time...hh:mm am|pm"];
     }
-    else if (![self validateString:textClose.text])
+    else if (![self validateString:txtFldCloseTime.text])
     {
         [msg displayMessage:@"Please enter a valid shop open time...hh:mm am|pm"];
     }
@@ -180,7 +186,7 @@ _hoursButton.action=@selector(revealToggle:);
     else {
         
         NSArray *keys = [NSArray arrayWithObjects:@"day",@"location",@"open_time",@"close_time",@"is_open", nil];
-        NSArray *objects = [NSArray arrayWithObjects:[self.downPickerDay text],[self.downPickerLoc text],textOpen.text,textClose.text,[self.downPickerStatus text], nil];
+        NSArray *objects = [NSArray arrayWithObjects:[self.downPickerDay text],[self.downPickerLoc text],txtFldOpenTime.text,txtFldCloseTime.text,[self.downPickerStatus text], nil];
         
         
         GetUrl *href = [[GetUrl alloc] init];
@@ -224,8 +230,8 @@ _hoursButton.action=@selector(revealToggle:);
     
     for(i=0;i<5;i++)
     {
-        UITextField *textField=(UITextField *)[self.view viewWithTag:i];
-        [textField setText:@""];
+        UITextField *txtFldField=(UITextField *)[self.view viewWithTag:i];
+        [txtFldField setText:@""];
     
     }
 }

@@ -23,7 +23,7 @@ NSArray *menu;
 [super viewDidLoad];
 
 //Holds the identifier for all tablecell in the Table View
-menu=@[@"menu",@"rewards",@"orders",@"hours",@"reports",@"logout"];
+menu=@[@"menu",@"rewards",@"orders",@"hours",@"newsletter",@"reports",@"logout"];
 
 // Uncomment the following line to preserve selection between presentations.
 self.clearsSelectionOnViewWillAppear = NO;

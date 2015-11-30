@@ -24,7 +24,7 @@
 @property (strong,nonatomic) DownPicker *downPickersat;
 @property (strong,nonatomic) DownPicker *downPickersun;
 
-@property (weak, nonatomic) IBOutlet UITextField *textLoc;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldLoc;
 @property (weak,nonatomic) NSString *locName;
 @property (weak, nonatomic) IBOutlet UITextField *mOpen;
 @property (weak, nonatomic) IBOutlet UITextField *mClose;
@@ -50,7 +50,7 @@
 
 @property (weak,nonatomic) NSArray *jsonArray;
 
-@property (weak, nonatomic) IBOutlet UIButton *updateBtn;
+@property (weak, nonatomic) IBOutlet UIButton *btnUpdate;
 
 - (IBAction)updateHours:(id)sender;
 
