@@ -8,10 +8,11 @@
 
 #import "OrdersViewController.h"
 #import "SWRevealViewController.h"
-
+#import "SIOSocket.h"
 
 @interface OrdersViewController ()
-
+@property SIOSocket *socket;
+@property BOOL socketIsConnected;
 @end
 
 @implementation OrdersViewController
@@ -23,10 +24,11 @@ _ordersButton.target=self.revealViewController;
 _ordersButton.action=@selector(revealToggle:);
 [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
-
+    /*[SIOSocket socketWithHost: @"http://localhost:8000" response: ^(SIOSocket *socket) {
+        self.socket = socket;
+    }];*/
+    
 }
-
-
 
 - (void)didReceiveMemoryWarning {
 [super didReceiveMemoryWarning];
