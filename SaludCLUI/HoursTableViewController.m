@@ -88,7 +88,7 @@ if(res1 == 1)
     }
     else
     {
-        [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+        [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
     }
 }
 else if(res1 == 2)
