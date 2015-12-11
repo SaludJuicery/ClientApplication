@@ -14,11 +14,19 @@
 #import "GetCategories.h"
 #import "GetMenuItems.h"
 #import "Reachability.h"
+#import "AppDelegate.h"
 
 @interface DeleteViewController ()
 //Only required when using built-in delete button for tableview
 //@property (strong, nonatomic) NSIndexPath *indexPathToBeDeleted;
+{
+    AppDelegate *appDelegate;
+    NSString *openTime;
+    NSString *closeTime;
+    NSString *currentTime;
+    int createFlag;
 
+}
 @end
 
 @implementation DeleteViewController
@@ -30,6 +38,15 @@
 - (void)viewDidLoad {
 [super viewDidLoad];
 
+    // Get Time
+    [self getTime];
+    
+    //Compare Time
+    int flag = [self compareTime];
+    
+    //if(!flag)
+   // {
+    
     _txtFldCategory.borderStyle = UITextBorderStyleRoundedRect;
     
     //Below code checks whether internet connection is there or not
@@ -44,28 +61,14 @@
     {
     //Get the Categories from db
     GetCategories  *getCategory = [[GetCategories alloc] init];
-    NSMutableArray *categoryArray = [getCategory getCategories];
+        NSMutableArray *categoryArray = [getCategory getData:3];
     
     self.downPickerCat = [[DownPicker alloc] initWithTextField:self.txtFldCategory withData:categoryArray];
     }
- //hide the delete custom button if items generated is fewer
-if(self.autoCompleteData.count < 10)
-{
-[self.btnDelete setHidden:YES];
-}
-else
-{
-[self.btnDelete setHidden:NO];
-
-}
-
-/*
-* Below code is used to hide the table view once the menu screen loads.
-*/
+ 
 tblViewItems.delegate = self;
 tblViewItems.dataSource = self;
 tblViewItems.scrollEnabled = YES;
-tblViewItems.hidden = NO;
 [tblViewItems setEditing:YES animated:YES];
 
 
@@ -78,7 +81,8 @@ self.tblViewItems.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 [self.downPickerCat addTarget:self
 action:@selector(getMenuItems:)
 forControlEvents:UIControlEventValueChanged];
-
+        
+    //}
 }
 
 -(void)getMenuItems:(id)sender {
@@ -87,17 +91,21 @@ forControlEvents:UIControlEventValueChanged];
     
     NSMutableArray *getItems = [getMenuItems getMenuItems:[self.downPickerCat text]];
     
-    self.autoCompleteData = getItems;
-
+    if(getItems.count > 0)
+    {
+        self.autoCompleteData = getItems;
+    }
+    else
+    {
+        [self.autoCompleteData addObject:@"No Data Available"];
+    }
     [tblViewItems reloadData];
-
 }
 
 
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger) section {
-
 return autoCompleteData.count;
 }
 
@@ -115,7 +123,9 @@ if (cell == nil) {
 cell = [[UITableViewCell alloc]
 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
 }
-cell.textLabel.text = [autoCompleteData objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = [autoCompleteData objectAtIndex:indexPath.row];
+    
 return cell;
 }
 
@@ -132,30 +142,21 @@ return cell;
 return 44;
 }
 
-// custom view for footer. will be adjusted to default or specified footer height
-// Notice: this will work only for one section within the table view
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 
-if(viewFooter == nil) {
-//allocate the view if it doesn't exist yet
+if(viewFooter == nil)
+{
 viewFooter  = [[UIView alloc] init];
 
-//create the button
 UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 [button  setBackgroundColor:[UIColor redColor]];
 
-//the button should be as big as a table view cell
-[button setFrame:CGRectMake(10, 3, 320, 44)];
-
-//set title, font size and font color
+[button setFrame:CGRectMake(10, 3, 450, 44)];
 [button setTitle:@"Delete Selected" forState:UIControlStateNormal];
 [button.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-//set action of the button
 [button addTarget:self action:@selector(deleteItems:)
 forControlEvents:UIControlEventTouchUpInside];
-
 
 UITableViewCell *cell = nil;
 static NSString *AutoCompleteRowIdentifier = @"AutoCompleteRowIdentifier";
@@ -163,22 +164,11 @@ cell = [tableView dequeueReusableCellWithIdentifier:AutoCompleteRowIdentifier];
 cell = [[UITableViewCell alloc]
 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AutoCompleteRowIdentifier];
 cell.textLabel.text = @"";
-
-//Show button in footer only when 10 or less items are there
-if(self.autoCompleteData.count < 10)
-{
-//add the empty cell and button to the uitableview footer
-[viewFooter addSubview:cell];
-[viewFooter addSubview:button];
 }
-}
-
-//return the view for the footer
 return viewFooter;
 }
 
 
-/*Below code is used to enable the editing mode in the tableview*/
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
 return YES;
@@ -201,11 +191,99 @@ return YES;
 */
 
 
+-(void)getTime
+{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    int res1;
+    
+    NSString *locName = appDelegate.location;
+    GetUrl *href = [[GetUrl alloc] init];
+    NSString *url = [href getHref:12];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayName = [dateFormatter stringFromDate:[NSDate date]];
+    
+    if([locName containsString:@"shady"])
+    {
+        locName = @"Shadyside";
+    }
+    else
+    {
+        locName = @"Sewickley";
+    }
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"location",@"day", nil];
+    NSArray *objects = [NSArray arrayWithObjects:locName,dayName, nil];
+    
+    RemoteGetData *remote = [[RemoteGetData alloc] init];
+    
+    //Below code checks whether internet connection is there or not
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable) {
+        [msg displayMessage:@"No internet connection available..Please connect to the internet.."];
+    }
+    else
+    {
+        res1 = [remote getJsonData:keys forobjects:objects forurl:url];
+        
+        if(res1 == 1)
+        {
+            if([remote.errorMsg containsString:@"not connect"])
+            {
+                [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+            }
+            else
+            {
+                [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
+            }
+        }
+        else if(res1 == 2)
+        {
+            //Receive the timings as dict and store in array
+            NSMutableArray *hoursArray = remote.jsonData;
+            
+            NSDictionary *itemDict = [hoursArray objectAtIndex:0];
+            
+            openTime = [itemDict objectForKey:@"open_time"];
+            closeTime = [itemDict objectForKey:@"close_time"];
+        }
+    }
+}
+
+
+-(int)compareTime
+{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"HH:mm";
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSDate *cTime1= [dateFormatter dateFromString:openTime];
+    NSDate *cTime2 = [dateFormatter dateFromString:closeTime];
+    NSDate *systemTime = [dateFormatter dateFromString:currentTime];
+    
+    NSComparisonResult openTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime1]];
+    NSComparisonResult closeTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime2]];
+    
+    if(openTimeResult == NSOrderedDescending && closeTimeResult == NSOrderedAscending)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 
 //Below code is for deleting multiple items at once
 - (IBAction)deleteItems:(id)sender {
-
+    
 NSArray *selectedCells = [self.tblViewItems indexPathsForSelectedRows];
 msg = [[MessageController alloc] init];
 
@@ -247,12 +325,21 @@ NSArray *selectedCells = [self.tblViewItems indexPathsForSelectedRows];
 NSMutableIndexSet *indicesToDelete  = [[NSMutableIndexSet alloc] init];
 
 //Store selected Cells value in an array
-    NSMutableArray *itemsToDelete = [[NSMutableArray alloc] init];
+    
+    NSString *itemsToDelete =@"";
     
 //Get the indexs from the array to delete items
 for (NSIndexPath *indexPath in selectedCells) {
     [indicesToDelete addIndex:indexPath.row];
-    [itemsToDelete addObject:[autoCompleteData objectAtIndex:indexPath.row]];
+   
+    if(![itemsToDelete isEqualToString:@""])
+    {
+    itemsToDelete = [itemsToDelete stringByAppendingString:[[autoCompleteData objectAtIndex:indexPath.row] stringByAppendingString:@","]];
+    }
+    else
+    {
+        itemsToDelete = [itemsToDelete stringByAppendingString:[autoCompleteData objectAtIndex:indexPath.row]];
+    }
 }
     
 //Below code is for manual Delete Button
@@ -262,7 +349,9 @@ for (NSIndexPath *indexPath in selectedCells) {
 [tblViewItems endUpdates];
 [tblViewItems reloadData];
 
-
+    NSLog(@"Item:%@",itemsToDelete);
+    
+    
 //Generate Objects and Keys to pass to url
 NSArray *keys = [NSArray arrayWithObjects:@"category",@"menuItemsToDelete", nil];
 NSArray *objects = [NSArray arrayWithObjects:_txtFldCategory.text, itemsToDelete, nil];
@@ -295,15 +384,14 @@ if(res==1)
     }
     else
     {
-        [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+        [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
     }}
 else
 {
 [msg displayMessage:@"Menu Items Deleted Successfully"];
 }
-    }
 }
-
+}
 }
 @end
 
