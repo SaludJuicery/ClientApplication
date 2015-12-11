@@ -21,17 +21,4 @@ cancelButtonTitle:@"OK" otherButtonTitles:nil];
 [alert show];
 }
 
-/*
--(void)deleteConfirmation:(NSString *)msg {
-
-UIAlertView *deleteConfirm = [[UIAlertView alloc]
-initWithTitle:@"Confirmation"
-message:[NSString stringWithFormat:@"%@",msg]
-delegate:self
-cancelButtonTitle:@"NO"
-otherButtonTitles:@"YES", nil];
-
-[deleteConfirm show];
-}
-*/
 @end
