@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -47,19 +52,25 @@
 	</array>
 	<key>Urls</key>
 	<array>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/login</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/logout</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/insert</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/categories/get</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/insert</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/menuItems/get</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/update</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItems/delete</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/addons/insert</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/insert</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/delete</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/update</string>
-		<string>https://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/login</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/auth/logout</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/insert</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/categories/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/insert</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/category/menuItems/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItem/update</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/menuItems/delete</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/menu/addons/insert</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/insert</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/offers/delete</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/update</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/restaurant/timings/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/analytics/hourlySales/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/analytics/dailySales/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/orders/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/order/complete</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/analytics/dashboard/get</string>
+		<string>http://ec2-52-88-11-130.us-west-2.compute.amazonaws.com:3000/order/cancel</string>
 	</array>
 </dict>
 </plist>
