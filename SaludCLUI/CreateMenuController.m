@@ -8,14 +8,22 @@
 
 #import "CreateMenuController.h"
 #import "RemoteLogin.h"
+#import "RemoteGetData.h"
 #import "MessageController.h"
 #import "DownPicker.h"
 #import "GetUrl.h"
 #import "GetCategories.h"
 #import "Reachability.h"
+#import "AppDelegate.h"
 
 @interface CreateMenuController ()
-
+{
+    AppDelegate *appDelegate;
+    NSString *openTime;
+    NSString *closeTime;
+    NSString *currentTime;
+    int createFlag;
+}
 @end
 
 @implementation CreateMenuController
@@ -23,10 +31,18 @@
 
 
 - (void)viewDidLoad {
-[super viewDidLoad];
     
-    int i;
-    for(i=1;i<=6;i++)
+    [super viewDidLoad];
+    
+    // Get Time
+    [self getTime];
+    
+    //Compare Time
+    [self compareTime];
+    
+    msg = [[MessageController alloc] init];
+    
+    for(int i=1;i<=7;i++)
     {
         UITextField *textField=(UITextField *)[self.view viewWithTag:i];
         textField.borderStyle = UITextBorderStyleRoundedRect;
@@ -34,7 +50,6 @@
     
     self.txtViewDesc.layer.cornerRadius = 5;
     self.txtViewDesc.layer.borderWidth = 0.5f;
-    
     self.txtViewDesc.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     //Below code checks whether internet connection is there or not
@@ -48,18 +63,108 @@
     else
     {
         GetCategories *getCategory = [[GetCategories alloc] init];
-        categoryList = [getCategory getCategories];
+        categoryList = [getCategory getData:3];
+        self.downPickerCat = [[DownPicker alloc] initWithTextField:_txtFldCat withData:categoryList];
     }
-    //Get the Categories from db
-    self.downPickerCat = [[DownPicker alloc] initWithTextField:_txtFldCat withData:categoryList];
     
-    
-// create the array of data for location and bind to location field
 NSMutableArray* arrLoc = [[NSMutableArray alloc] init];
 [arrLoc addObject:@"ShadySide"];
 [arrLoc addObject:@"Sewickley"];
 [arrLoc addObject:@"Both"];
 self.downPickerLoc = [[DownPicker alloc] initWithTextField:self.txtFldLocation withData:arrLoc];
+}
+
+-(void)getTime
+{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+ 
+    int res1;
+    
+    NSString *locName = appDelegate.location;
+    GetUrl *href = [[GetUrl alloc] init];
+    NSString *url = [href getHref:12];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayName = [dateFormatter stringFromDate:[NSDate date]];
+
+    if([locName containsString:@"shady"])
+    {
+        locName = @"Shadyside";
+    }
+    else
+    {
+        locName = @"Sewickley";
+    }
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"location",@"day", nil];
+    NSArray *objects = [NSArray arrayWithObjects:locName,dayName, nil];
+    
+    RemoteGetData *remote = [[RemoteGetData alloc] init];
+    
+    //Below code checks whether internet connection is there or not
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+        if (networkStatus == NotReachable) {
+            [msg displayMessage:@"No internet connection available..Please connect to the internet.."];
+        }
+        else
+        {
+            res1 = [remote getJsonData:keys forobjects:objects forurl:url];
+            
+            if(res1 == 1)
+            {
+                if([remote.errorMsg containsString:@"not connect"])
+                {
+                    [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+                }
+                else
+                {
+                    [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
+                }
+            }
+            else if(res1 == 2)
+            {
+                //Receive the timings as dict and store in array
+                NSMutableArray *hoursArray = remote.jsonData;
+
+                NSDictionary *itemDict = [hoursArray objectAtIndex:0];
+                
+                openTime = [itemDict objectForKey:@"open_time"];
+                closeTime = [itemDict objectForKey:@"close_time"];
+            }
+        }
+}
+
+
+-(void)compareTime
+{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"HH:mm";
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSDate *cTime1= [dateFormatter dateFromString:openTime];
+    NSDate *cTime2 = [dateFormatter dateFromString:closeTime];
+    NSDate *systemTime = [dateFormatter dateFromString:currentTime];
+    
+   // NSLog(@"Open:%@",[dateFormatter stringFromDate:cTime1]);
+   // NSLog(@"Close:%@",[dateFormatter stringFromDate:cTime2]);
+   // NSLog(@"System:%@",[dateFormatter stringFromDate:[NSDate date]]);
+    
+    NSComparisonResult openTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime1]];
+    NSComparisonResult closeTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime2]];
+    
+    if(openTimeResult == NSOrderedDescending && closeTimeResult == NSOrderedAscending)
+    {
+        createFlag = 0;
+    }
+    else
+    {
+        createFlag = 1;
+    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -91,7 +196,6 @@ _txtViewDesc.text = @"";
 _txtFldLocation.text=@"";
 }
 
-/*Below function is used to submit the data as entered by the user*/
 -(void)submitButton:(id)sender {
 
 NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"^(?:|0|[1-9]\\d*)(?:\\.\\d*)?$" options:NSRegularExpressionCaseInsensitive error:NULL];
@@ -103,9 +207,6 @@ NSTextCheckingResult *matchGrowler = [regExp firstMatchInString:_txtFldGrowler.t
 NSRegularExpression *regExp1 = [NSRegularExpression regularExpressionWithPattern:@"^(\\w+\\s?\\+ )*\\w+$" options:NSRegularExpressionCaseInsensitive error:NULL];
 
 NSTextCheckingResult *matchDesc = [regExp1 firstMatchInString:_txtViewDesc.text.lowercaseString options:0 range:NSMakeRange(0, [_txtViewDesc.text length])];
-
-
-msg = [[MessageController alloc] init];
 
 if ([_txtFldCat.text isEqualToString:@""])
 {
@@ -145,6 +246,10 @@ else if([_txtFldGrowler.text isEqualToString:@""]){
 }
 else if(!matchGrowler){
 [msg displayMessage:@"Growler Price: Please enter only numbers.Ex. 99.99"];
+}
+else if(createFlag == 0)
+{
+[msg displayMessage:@"Cannot create an item. Shop is not closed yet."];
 }
 else{
 
@@ -203,7 +308,7 @@ if(res==1)
      }
      else
      {
-         [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+         [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
      }
 }
 else
@@ -227,28 +332,19 @@ else
 
 - (IBAction)newCategoryBtn:(id)sender {
     
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"New Category Input" message:@"Please enter new category name:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create Category",nil];
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"New Category Input" message:@"Please enter new category name:" delegate:self cancelButtonTitle:@"Create Category" otherButtonTitles:@"Cancel",nil];
     
     //set the style type of alertbox whether single or multiple inputs needed
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     //create a textfield for username
-    UITextField * uname = [alertView textFieldAtIndex:0];
-    uname.keyboardType = UIKeyboardTypeDefault;
-    uname.placeholder = @"Category Name";
+    UITextField * categoryName = [alertView textFieldAtIndex:0];
+    categoryName.keyboardType = UIKeyboardTypeDefault;
+    categoryName.placeholder = @"Category Name";
     
     //display the alertbox
     [alertView show];
     
-    //Get textfield values from pop-up box
-    /*if (alertView.alertViewStyle == UIAlertViewStylePlainTextInput) {
-       
-        NSString *categoryName =[alertView textFieldAtIndex:0].text;
-       
-        if (![categoryList containsObject:categoryName]) {
-            [categoryList addObject:categoryName];
-        }
-    }*/
 }
 
 - (IBAction)addonBtn:(id)sender {
@@ -262,46 +358,44 @@ else
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     //create a textfield for username
-    UITextField * addonname = [alertView textFieldAtIndex:0];
-    addonname.keyboardType = UIKeyboardTypeDefault;
-    addonname.placeholder = @"Add-on Name";
+    UITextField * addonName = [alertView textFieldAtIndex:0];
+    addonName.keyboardType = UIKeyboardTypeDefault;
+    addonName.placeholder = @"Add-on Name";
     
     //display the alertbox
     [alertView show];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+  
     NSString *buttonTitle = [alertView buttonTitleAtIndex:1];
-    int urlIndx;
-    NSString *key = [[NSString alloc] init];
-    NSString *value = [[NSString alloc] init];
-    NSString *alertMsg = [[NSString alloc] init];
+    NSArray *params;
     
     if ([buttonTitle isEqualToString:@"Create Addon"])
     {
-        urlIndx = 8;
-        key = @"addons";
-        value = [alertView textFieldAtIndex:0].text;
-        alertMsg = @"Add-On created successfully";
+        params =  [[NSArray alloc] initWithObjects:@"addons",[alertView textFieldAtIndex:0].text,@"8",@"Add-On created successfully", nil];
     }
     else
     {
-        urlIndx = 2;
-        key = @"category_name";
-        value = [alertView textFieldAtIndex:0].text;
-        alertMsg = @"New Category created successfully";
+        params =  [[NSArray alloc] initWithObjects:@"category_name",[alertView textFieldAtIndex:0].text,@"2",@"New Category created successfully", nil];
     }
     
-        NSArray *keys = [NSArray arrayWithObjects:key, nil];
-        
-        NSArray *objects = [NSArray arrayWithObjects:value, nil];
-        
-        GetUrl *href = [[GetUrl alloc] init];
-        NSString *url = [href getHref:urlIndx];
+    [self createMenuItem:params];
+}
+
+-(void)createMenuItem:(NSArray *)paramArray
+{
+
+    NSArray *keys = [NSArray arrayWithObjects:paramArray[0], nil];
+    
+    NSArray *objects = [NSArray arrayWithObjects:paramArray[1], nil];
+    
+    GetUrl *href = [[GetUrl alloc] init];
+    NSString *url = [href getHref:(int) paramArray[2]];
+    
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-    msg = [[MessageController alloc] init];
     
     if (networkStatus == NotReachable) {
         [msg displayMessage:@"No internet connection avialable..Please connect to the internet.."];
@@ -319,14 +413,15 @@ else
             }
             else
             {
-                [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+                [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
             }
         }
         else
         {
-            [msg displayMessage:alertMsg];
+            [msg displayMessage:paramArray[3]];
         }
-}
+    }
+
 }
 
 @end
