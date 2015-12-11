@@ -23,27 +23,25 @@
 
 - (void)viewDidLoad {
 [super viewDidLoad];
+    
+//Get the category name
+_txtFldCategory1.text = _tempCategory;
 
 //Get the item name
 _txtFldItem.text = _tempName;
     
-//Get the category name
-_txtFldItem.text = _tempCat;
+
 
     int i;
     
-    for(i=1;i<=5;i++)
+    for(i=1;i<=6;i++)
     {
         UITextField *textField=(UITextField *)[self.view viewWithTag:i];
        textField.borderStyle = UITextBorderStyleRoundedRect;
     }
-
-    self.txtViewIngre.layer.cornerRadius = 5;
-    self.txtViewIngre.layer.borderWidth = 0.5f;
-    self.txtViewIngre.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
-//Call the function getItem to assign item details to textfields
-    [self getItem:_tempName forCategory:_tempCat];
+    //Call the function getItem to assign item details to textfields
+    [self getItem:_tempName forCategory:_tempCategory];
     
 // create the array of data for location and bind to location field
 NSMutableArray* arrLoc = [[NSMutableArray alloc] init];
@@ -122,7 +120,7 @@ NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:
     
     NSTextCheckingResult *matchIngre = [regExp1 firstMatchInString:_txtViewIngre.text.lowercaseString options:0 range:NSMakeRange(0, [_txtViewIngre.text length])];
     
-    if ([_txtFldCategory.text isEqualToString:@""])
+    if ([_txtFldCategory1.text isEqualToString:@""])
     {
         [msg displayMessage:@"Item Category: Field cannot be empty."];
         
@@ -164,7 +162,7 @@ NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:
     else{
 
         NSString *name = _txtFldItem.text;
-        NSString *cate = _txtFldCategory.text;
+        NSString *cate = _txtFldCategory1.text;
         NSString *ingre = _txtViewIngre.text;
         NSString *regular = _txtFldRegular.text;
         NSString *petite = _txtFldPetite.text;
@@ -223,7 +221,7 @@ if(res==1)
     }
     else
     {
-        [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+        [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
     }
 }
 else

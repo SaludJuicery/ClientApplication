@@ -17,7 +17,7 @@
 
 @property (strong,nonatomic) DownPicker *downPickerLoc;
 
-@property (weak, nonatomic) IBOutlet UITextField *txtFldCategory;
+@property (weak, nonatomic) IBOutlet UITextField *txtFldCategory1;
 @property (weak, nonatomic) IBOutlet UITextField *txtFldItem;
 @property (weak, nonatomic) IBOutlet UITextField *txtFldPetite;
 @property (weak, nonatomic) IBOutlet UITextField *txtFldRegular;
@@ -27,8 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnUpdate;
 @property (weak, nonatomic) IBOutlet UIButton *btnClear;
 
-@property (weak,nonatomic) NSString *tempName;
-@property (weak,nonatomic) NSString *tempCat;
+@property (nonatomic,strong) NSString *tempName;
+@property (nonatomic,strong) NSString *tempCategory;
 
 - (IBAction)UpdateMenu:(id)sender;
 - (IBAction)Clear:(id)sender;

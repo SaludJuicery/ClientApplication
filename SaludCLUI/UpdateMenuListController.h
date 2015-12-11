@@ -22,6 +22,9 @@
 @property (strong,nonatomic) NSMutableArray *itemsArray;
 @property (weak, nonatomic) NSString *menuItem;
 @property (weak, nonatomic) NSString *catName;
+@property (weak, nonatomic) IBOutlet UIButton *btnContinue;
+- (IBAction)showUpdateItem:(id)sender;
+
 
 //-(void)getCategories:(id) sender;
 -(void)getMenuItems:(id) sender;

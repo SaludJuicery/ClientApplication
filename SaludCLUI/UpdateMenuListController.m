@@ -14,9 +14,16 @@
 #import "GetCategories.h"
 #import "GetMenuItems.h"
 #import "Reachability.h"
+#import "AppDelegate.h"
 
 @interface UpdateMenuListController ()
-
+{
+    AppDelegate *appDelegate;
+    NSString *openTime;
+    NSString *closeTime;
+    NSString *currentTime;
+    int createFlag;
+}
 @end
 
 @implementation UpdateMenuListController
@@ -26,6 +33,15 @@
 
     [super viewDidLoad];
     
+    // Get Open and Shop Time from DB
+    [self getTime];
+    
+    //Compare Shop Time with Current System Time
+    int flag = [self compareTime];
+    
+    
+    if(flag)
+    {
     _txtFldCategory.borderStyle = UITextBorderStyleRoundedRect;
     
     //Below code checks whether internet connection is there or not
@@ -41,8 +57,14 @@
 
     //Get the menu categories from db and bind to downpicker textfield
     GetCategories *getCategories = [[GetCategories alloc] init];
-    NSMutableArray* categories = [getCategories getCategories];
+        NSMutableArray* categories = [getCategories getData:3];
     self.downPickerCat = [[DownPicker alloc] initWithTextField:self.txtFldCategory withData:categories];
+
+        // Initialize textfield with first category
+        _txtFldCategory.text = @"BOWLS";
+        
+        // Initialize tableview with first category menu items
+        [self getMenuItems:self];
     }
     
     //This function will get open and close time based on location selected
@@ -56,15 +78,14 @@ tblViewCategories.dataSource=self;
     [self.view addSubview:tblViewCategories];
 
     // This line will only show tableview visible cells
-tblViewCategories.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
+    tblViewCategories.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
 }
 
 //Get Menu items from db and bind to downpicker textfield
 -(void)getMenuItems:(id)sender {
     
     GetMenuItems *getMenuItems = [[GetMenuItems alloc] init];
-    
     
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -77,7 +98,14 @@ tblViewCategories.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     else
     {
 
-    NSMutableArray *menuItems = [getMenuItems getMenuItems:[self.downPickerCat text]];
+        NSString *categoryName = [self.downPickerCat text];
+        
+        if([categoryName isEqualToString:@""])
+        {
+            categoryName = @"BOWLS";
+        }
+        
+    NSMutableArray *menuItems = [getMenuItems getMenuItems:categoryName];
     
     self.itemsArray = menuItems;
         
@@ -117,7 +145,6 @@ return cell;
 UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
 
 _menuItem =selectedCell.textLabel.text;
-
 }
 
 
@@ -152,7 +179,7 @@ UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 forControlEvents:UIControlEventTouchUpInside];
 
 //Add the button to the uitableview footer
-[viewFooter addSubview:button];
+//[viewFooter addSubview:button];
 }
 
 //return the view for the footer
@@ -160,23 +187,7 @@ return viewFooter;
 }
 
 -(void)showItems:(id) sender {
-    
-NSArray *selectedCells = [tblViewCategories indexPathsForSelectedRows];
-msg = [[MessageController alloc] init];
-
-if([_txtFldCategory.text isEqualToString:@""])
-{
-[msg displayMessage:@"Category Field cannot be empty."];
-}
-else if(selectedCells.count < 1)
-{
-[msg displayMessage:@"Select an item to update."];
-}
-else
-{
-[self performSegueWithIdentifier:@"sw_upitem" sender: self];
-}
-}
+    }
 
 - (void)didReceiveMemoryWarning {
 [super didReceiveMemoryWarning];
@@ -188,14 +199,126 @@ else
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-// Get the new view controller using [segue destinationViewController].
-// Pass the selected object to the new view controller.
 
-UpdateMenuViewController *destViewController = segue.destinationViewController;
-
-destViewController.tempName =_menuItem;
-destViewController.tempCat= [self.downPickerCat text];
+    if ([[segue identifier] isEqualToString:@"sw_upitem"])
+    {
+    UpdateMenuViewController *destViewController = [segue destinationViewController];
+        
+    destViewController.tempName =_menuItem;
+    destViewController.tempCategory= _catName;
+    }
+    
 }
 
 
+-(void)getTime
+{
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    int res1;
+    
+    NSString *locName = appDelegate.location;
+    GetUrl *href = [[GetUrl alloc] init];
+    NSString *url = [href getHref:12];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayName = [dateFormatter stringFromDate:[NSDate date]];
+    
+    if([locName containsString:@"shady"])
+    {
+        locName = @"Shadyside";
+    }
+    else
+    {
+        locName = @"Sewickley";
+    }
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"location",@"day", nil];
+    NSArray *objects = [NSArray arrayWithObjects:locName,dayName, nil];
+    
+    RemoteGetData *remote = [[RemoteGetData alloc] init];
+    
+    //Below code checks whether internet connection is there or not
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable) {
+        [msg displayMessage:@"No internet connection available..Please connect to the internet.."];
+    }
+    else
+    {
+        res1 = [remote getJsonData:keys forobjects:objects forurl:url];
+        
+        if(res1 == 1)
+        {
+            if([remote.errorMsg containsString:@"not connect"])
+            {
+                [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+            }
+            else
+            {
+                [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
+            }
+        }
+        else if(res1 == 2)
+        {
+            //Receive the timings as dict and store in array
+            NSMutableArray *hoursArray = remote.jsonData;
+            
+            NSDictionary *itemDict = [hoursArray objectAtIndex:0];
+            
+            openTime = [itemDict objectForKey:@"open_time"];
+            closeTime = [itemDict objectForKey:@"close_time"];
+        }
+    }
+}
+
+
+-(int)compareTime
+{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"HH:mm";
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSDate *cTime1= [dateFormatter dateFromString:openTime];
+    NSDate *cTime2 = [dateFormatter dateFromString:closeTime];
+    NSDate *systemTime = [dateFormatter dateFromString:currentTime];
+    
+    NSComparisonResult openTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime1]];
+    NSComparisonResult closeTimeResult = [[dateFormatter stringFromDate:systemTime] compare:[dateFormatter stringFromDate:cTime2]];
+    
+    if(openTimeResult == NSOrderedDescending && closeTimeResult == NSOrderedAscending)
+    {
+        return 0; // Cannot Update
+    }
+    else
+    {
+        return 1; // Can Update
+    }
+}
+
+
+- (IBAction)showUpdateItem:(id)sender {
+    
+    NSArray *selectedCells = [tblViewCategories indexPathsForSelectedRows];
+    msg = [[MessageController alloc] init];
+    
+    if([_txtFldCategory.text isEqualToString:@""])
+    {
+        [msg displayMessage:@"Category Field cannot be empty."];
+    }
+    else if(selectedCells.count < 1)
+    {
+        [msg displayMessage:@"Select an item to update."];
+    }
+    else
+    {
+        _catName = _txtFldCategory.text;
+        [self performSegueWithIdentifier:@"sw_upitem" sender: self];
+    }
+
+}
 @end
