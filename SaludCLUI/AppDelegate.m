@@ -9,28 +9,37 @@
 #import "AppDelegate.h"
 #import "MessageController.h"
 #import "TimerClass.h"
+#import "GetUrl.h"
 
 @interface AppDelegate ()
 {
-    NSTimer *idleTimer;
+  //  NSTimer *idleTimer;
 }
 @end
 
-#define maxIdleTimeSecs 60.0
+//#define maxIdleTimeSecs 60.0
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    /*__block UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+       
+    }];*/
+    
     return YES;
 }
 
 - (void)application:(TimerClass *)application willSendTouchEvent:(UIEvent *)event {
     //NSLog(@"touch event: I touched on %@", event.description);
     
-    [self resetIdleTimer];
+    //[self resetIdleTimer];
 }
+
+/*
 #pragma mark - Handling idle timeout
 
 - (void)resetIdleTimer {
@@ -47,7 +56,7 @@
     MessageController *msg = [[MessageController alloc] init];
     [msg displayMessage:@"Idle Time Exceeded"];
 }
-
+*/
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

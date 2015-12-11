@@ -13,6 +13,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)resetIdleTimer;
+@property(strong,nonatomic) NSString *location;
 @end
 
