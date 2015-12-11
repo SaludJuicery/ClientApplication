@@ -15,7 +15,9 @@
 #import "Reachability.h"
 
 @interface NewsLetterViewController () <MFMailComposeViewControllerDelegate>
-
+{
+    MessageController *msg;
+}
 @end
 
 @implementation NewsLetterViewController
@@ -40,12 +42,12 @@
     [tblViewRecipients setEditing:YES animated:YES];
     [self.view addSubview:tblViewRecipients];
 
+    msg = [[MessageController alloc] init];
+    
 }
 
 - (IBAction)sendMail:(UIButton *)sender
 {
-    MessageController *msg = [[MessageController  alloc] init];
-    
         NSArray *selectedCells = [self.tblViewRecipients indexPathsForSelectedRows];
     
         if([txtFldSubject.text isEqualToString:@""])
@@ -83,8 +85,6 @@
     if([title isEqualToString:@"YES"])
     {
         
-        MessageController *msg = [[MessageController alloc]init];
-        
         NSArray *selectedList = [self.tblViewRecipients indexPathsForSelectedRows];
         
         NSMutableIndexSet *indicesToDelete  = [[NSMutableIndexSet alloc] init];
@@ -116,13 +116,11 @@
                 [mail setMessageBody:txtViewMessage.text isHTML:NO];
                 [mail setToRecipients:listToSend];
                 
-                //[mail setToRecipients:@[@"testingEmail@example.com"]];
-                
-                //[self presentViewController:mail animated:YES completion:NULL];
+                [self presentViewController:mail animated:YES completion:NULL];
             }
             else
             {
-                NSLog(@"This device cannot send email");
+                [msg displayMessage:@"The device cannot send mail from the device."];
             }
         }
     }
@@ -132,23 +130,22 @@
 {
     switch (result) {
         case MFMailComposeResultSent:
-            NSLog(@"Mail has been sent.");
+            [msg displayMessage:@"Mail has been sent"];
             break;
         case MFMailComposeResultSaved:
-            NSLog(@"Mail has been saved.");
+            [msg displayMessage:@"Mail has been saved"];
             break;
         case MFMailComposeResultCancelled:
-            NSLog(@"Mail has been cancelled.");
+             [msg displayMessage:@"Mail has been cancelled"];
             break;
         case MFMailComposeResultFailed:
-            NSLog(@"Mail failed:  An error occurred when trying to compose this email:%@", [error localizedDescription]);
+             [msg displayMessage:[@"Mail failed:  An error occurred when trying to compose this email:%@" stringByAppendingString:[error localizedDescription]]];
             break;
         default:
-            NSLog(@"An error occurred when trying to compose this email: %@",[error localizedDescription]);
+           [msg displayMessage:[@"Mail failed:  An error occurred when trying to compose this email:%@" stringByAppendingString:[error localizedDescription]]];
             break;
     }
-    
-    //[self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning {
