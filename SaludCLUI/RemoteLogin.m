@@ -13,7 +13,7 @@
 -(int) getConnection:(NSArray*)keys forobjects:(NSArray*)values forurl:(NSString*) getUrl
 {
 NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:values forKeys:keys];
-
+    NSLog(@"Dict sent:%@",jsonDictionary);
 NSData *jsonData ;
 NSString *jsonString;
 
@@ -34,8 +34,6 @@ NSError *errorReturned = nil;
 NSURLResponse *theResponse =[[NSURLResponse alloc]init];
 NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&theResponse error:&errorReturned];
     
-
-
 if (errorReturned) {
 _errorMsg = errorReturned.description;
 return 1;
@@ -44,12 +42,11 @@ else
 {
 NSError *jsonParsingError = nil;
 NSMutableArray *arrDoctorInfo  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&jsonParsingError];
-
+    
  for(NSString *str in arrDoctorInfo)
 {
 _errorMsg = [_errorMsg stringByAppendingString:str];
 }
-
 return 2;
 }
 }

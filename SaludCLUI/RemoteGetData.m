@@ -46,10 +46,8 @@ else
 {
 NSError *jsonParsingError = nil;
 NSMutableArray *arrDoctorInfo  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers|NSJSONReadingAllowFragments error:&jsonParsingError];
-
 //Storing the json data received from the HTTP request
 _jsonData = arrDoctorInfo;
-
 return 2;
 }
 }
