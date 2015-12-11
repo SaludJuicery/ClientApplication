@@ -22,5 +22,9 @@
 @property (strong,nonatomic) DownPicker *downPickerlocation;
 @property (weak, nonatomic) IBOutlet UITextField *txtFldlocation;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblnetSales;
+@property (weak, nonatomic) IBOutlet UILabel *lblTransactions;
+@property (weak, nonatomic) IBOutlet UILabel *lblAvgSales;
+@property (weak, nonatomic) IBOutlet UILabel *lblTopItems;
 
 @end
