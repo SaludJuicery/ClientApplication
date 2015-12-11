@@ -13,8 +13,13 @@
 {
     NSIndexPath *path;
     UUChart *chartView;
+    NSMutableArray *days;
+    NSMutableArray *salesCount;
+    NSMutableArray *hours;
+    NSMutableArray *transSum;
 }
-
+- (void)getHourlySales:(NSString *)getLocation;
+- (void)getWeeklySales:(NSString*)getLocation;
 - (void)configUI:(NSIndexPath *)indexPath;
 
 @end
