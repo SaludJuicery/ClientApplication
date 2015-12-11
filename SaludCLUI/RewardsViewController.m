@@ -56,7 +56,7 @@ _btnMenu.action=@selector(revealToggle:);
     {
 
     GetCategories *categories = [[GetCategories alloc] init];
-    NSMutableArray* menuCategories = [categories getCategories];
+        NSMutableArray* menuCategories = [categories getData:3];
     self.downPickerCat = [[DownPicker alloc] initWithTextField:self.txtFldCategory withData:menuCategories];
     }
     
@@ -324,7 +324,7 @@ if(res==1)
     }
     else
     {
-        [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+        [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
     }
 }
 else
