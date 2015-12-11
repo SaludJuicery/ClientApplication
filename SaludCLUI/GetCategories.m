@@ -15,11 +15,12 @@
 
 @synthesize categories;
 
--(NSMutableArray *)getCategories
+-(NSMutableArray *)getData:(int)indxUrl
 {
     
     GetUrl *href = [[GetUrl alloc] init];
-    NSString *url = [href getHref:3];
+    NSString *url = [href getHref:indxUrl];
+    
     int res1;
     MessageController *msg = [[MessageController alloc] init];
     RemoteGetData *remote1 = [[RemoteGetData alloc] init];
@@ -45,25 +46,24 @@
         }
         else
         {
-            [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote1.errorMsg.description]];
+            [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
         }
     }
     else if(res1==2)
     {
         
         //Receive the json object and add one by one to array
-        NSMutableArray *menuCategories = remote1.jsonData;
+        NSMutableArray *dataArray = remote1.jsonData;
         
         categories = [[NSMutableArray alloc] init];
         
-        for (int i=0;i<menuCategories.count;i++) {
+        for (int i=0;i<dataArray.count;i++) {
             
-            NSDictionary *dict = [menuCategories objectAtIndex:i];
+            NSDictionary *dict = [dataArray objectAtIndex:i];
             
             [categories addObject:[dict objectForKey:@"category_name"]];
             
-        }//End of For
-        
+        }
     }
     }
     return categories;

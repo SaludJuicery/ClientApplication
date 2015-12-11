@@ -12,6 +12,6 @@
 
 @property(strong,nonatomic)  NSMutableArray *categories;
 
--(NSMutableArray *)getCategories;
+-(NSMutableArray *)getData:(int) indxUrl;
 
 @end
