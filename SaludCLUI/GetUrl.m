@@ -21,7 +21,7 @@
     //To get the AWS url from plist file
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"]];
     NSArray *array = [dictionary objectForKey:@"Urls"];
-   
+    
     return array[urlIndex];
     }
 

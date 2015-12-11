@@ -48,7 +48,7 @@
         }
         else
         {
-            [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+            [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
         }
     }
     else if(res1 == 2)
@@ -67,7 +67,6 @@
         }
     }
     }
-    
     return  menuItems;
 }
 
@@ -104,7 +103,7 @@
         }
         else
         {
-            [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+            [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
         }
     }
     else if(res1 == 2)
@@ -124,6 +123,7 @@
         [menuItemDetails addObject:itemDict];
     }
     }
+    NSLog(@"Menu item:%@",menuItemDetails);
     return  menuItemDetails;
 }
 @end
