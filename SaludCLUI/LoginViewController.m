@@ -21,6 +21,16 @@
 
 @implementation LoginViewController
 
+
+- (void)viewDidLoad {
+
+    [super viewDidLoad];
+    checked= FALSE;
+    
+    _txtFldUsername.borderStyle = UITextBorderStyleRoundedRect;
+    _txtFldPassword.borderStyle = UITextBorderStyleRoundedRect;
+}
+
 - (IBAction)checkBoxButton:(id)sender {
 if (checked) {
 checked = NO;
@@ -37,36 +47,49 @@ bindings = [PDKeychainBindings sharedKeychainBindings];
 }
 }
 
+- (BOOL) validateEmail:(NSString*) emailString {
+    
+    if([emailString length]==0){
+        return NO;
+    }
+    
+    NSString *regExPattern = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    
+    NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:regExPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    NSUInteger regExMatches = [regEx numberOfMatchesInString:emailString options:0 range:NSMakeRange(0, [emailString length])];
+
+    if (regExMatches == 0) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+
 - (IBAction)userLogin:(UIButton *)sender {
 
     msg = [[MessageController alloc] init];
     
-    // Reset the timer upon new login
-    //[(AppDelegate *)[UIApplication sharedApplication] resetIdleTimer];
-
 //If Username field is empty
 if([_txtFldUsername.text isEqualToString:@""])
 {
 [msg displayMessage:@"Input Error: Username is empty"];
-[_txtFldUsername becomeFirstResponder];
 }
 //IF password field is empty
 else if([_txtFldPassword.text isEqualToString:@""])
 {
-[_txtFldUsername resignFirstResponder];
 [msg displayMessage:@"Input Error: Password is empty"];
-[_txtFldPassword becomeFirstResponder];
 }
 //Below code let user navigate to MenuView Controller upon successfull login
+else if(![self validateEmail:_txtFldUsername.text])
+{
+[msg displayMessage:@"Invalid username. Ex:xyz@gmail.com"];
+}
 else
 {
-[_txtFldPassword resignFirstResponder];
 
-int res;
-
-//retrieve username and password
 NSString *username =@"salud.partner@gmail.com";//_txtFldUsername.text;
-NSString *password = @"Partner@Salud";//txtFldPassword.text;
+NSString *password = @"Partner@Salud";//_txtFldPassword.text;
 
 NSArray *keys = [NSArray arrayWithObjects:@"password", @"username", nil];
 NSArray *objects = [NSArray arrayWithObjects:password,username, nil];
@@ -76,46 +99,33 @@ NSString *url = [href getHref:0];
 
     //Below code checks whether internet connection is there or not
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
     if (networkStatus == NotReachable) {
         [msg displayMessage:@"No Internet Connection available..Please try again later."];
-    } else {
-    
-RemoteLogin *remote = [[RemoteLogin alloc] init];
-res = [remote getConnection:keys forobjects:objects forurl:url];
-
-/*if(res==1)
-{
-    if([remote.errorMsg containsString:@"not connect"])
-    {
-        [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
     }
     else
     {
-    [msg displayMessage:@"Login Error: Invalid Credentials"];
-    }
-}
-else if(res==2)
-{
-*///This code will help to navigate from Login Screen to  MenuViewController
-[self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
-/*}
-else
-{}
-*/
+        RemoteLogin *remote = [[RemoteLogin alloc] init];
+        int res = [remote getConnection:keys forobjects:objects forurl:url];
+
+        if(res==1)
+        {
+            [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+        }
+        else if(res==2)
+        {
+                [self performSegueWithIdentifier:@"MenuViewSegue" sender: self];
+        }
+        else
+        {
+            [msg displayMessage:@"Login Credentials are invalid."];
         }
     }
 }
-
-
-- (void)viewDidLoad {
-checked= FALSE;
-[super viewDidLoad];
-   
-    
-    _txtFldUsername.borderStyle = UITextBorderStyleRoundedRect;
-    _txtFldPassword.borderStyle = UITextBorderStyleRoundedRect;
 }
+
 
 //This method is used to clear all the fileds and reset checkbox in login screen
 -(void)viewWillAppear:(BOOL)animated
