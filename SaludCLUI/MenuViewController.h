@@ -9,20 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "MessageController.h"
 
-@interface MenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MenuViewController : UIViewController 
 {
-    NSMutableArray *pastCategory;
-    NSMutableArray *autocompleteData;
-    UITableView *autocompleteTableView;
     MessageController *msg;
 }
 
+@property (weak, nonatomic) NSString  *loc;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnMenu;
-
-@property (nonatomic, retain) NSMutableArray *pastCategory;
-@property (nonatomic, retain) NSMutableArray *autocompleteData;
-
-
-- (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring;
 
 @end
