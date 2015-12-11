@@ -22,6 +22,9 @@ NSArray *menu;
 - (void)viewDidLoad {
 [super viewDidLoad];
 
+    /* This line will only show tableview visible cells*/
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
 //Holds the identifier for all tablecell in the Table View
 menu=@[@"menu",@"rewards",@"orders",@"hours",@"newsletter",@"reports",@"logout"];
 
