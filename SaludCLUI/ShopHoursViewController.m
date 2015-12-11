@@ -11,7 +11,6 @@
 #import "MessageController.h"
 #import "RemoteLogin.h"
 #import "GetUrl.h"
-#import "ShopHoursViewController.h"
 #import "RemoteGetData.h"
 #import "Reachability.h"
 
@@ -62,9 +61,7 @@ _btnMenu.action=@selector(revealToggle:);
     self.downPickerStatus= [[DownPicker alloc] initWithTextField:self.txtFldStatus withData:open_close];
     
     //This function will get open and close time based on location selected
-    [self.downPickerLoc addTarget:self
-                           action:@selector(getLoc:)
-                 forControlEvents:UIControlEventValueChanged];
+   // [self.downPickerLoc addTarget:self action:@selector(getLoc:) forControlEvents:UIControlEventValueChanged];
     
     [self.downPickerDay addTarget:self
                            action:@selector(getLoc:)
@@ -75,9 +72,10 @@ _btnMenu.action=@selector(revealToggle:);
 
 -(void)getLoc:(id)sender
 {
+    
     NSString *locName = [self.downPickerLoc text];
     NSString *dayName = [self.downPickerDay text];
-    
+ 
     msg = [[MessageController alloc] init];
     
     GetUrl *href = [[GetUrl alloc] init];
@@ -85,46 +83,54 @@ _btnMenu.action=@selector(revealToggle:);
     
     int res1;
     
-    NSArray *keys = [NSArray arrayWithObjects:@"location",@"day", nil];
-    NSArray *objects = [NSArray arrayWithObjects:locName,dayName, nil];
-    
-    RemoteGetData *remote = [[RemoteGetData alloc] init];
-    
-    //Below code checks whether internet connection is there or not
-    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-    msg = [[MessageController alloc] init];
-    
-    if (networkStatus == NotReachable) {
-        [msg displayMessage:@"No internet connection available..Please connect to the internet.."];
-    }
-    else
+    if(![locName isEqualToString:@""])
     {
-    res1 = [remote getJsonData:keys forobjects:objects forurl:url];
-    
-    if(res1 == 1)
-    {
-        if([remote.errorMsg containsString:@"not connect"])
-        {
-            [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+        
+        NSArray *keys = [NSArray arrayWithObjects:@"location",@"day", nil];
+        NSArray *objects = [NSArray arrayWithObjects:locName,dayName, nil];
+        
+        RemoteGetData *remote = [[RemoteGetData alloc] init];
+        
+        //Below code checks whether internet connection is there or not
+        Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+        NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+        msg = [[MessageController alloc] init];
+        
+        if (networkStatus == NotReachable) {
+            [msg displayMessage:@"No internet connection available..Please connect to the internet.."];
         }
         else
         {
-            [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+            res1 = [remote getJsonData:keys forobjects:objects forurl:url];
+            
+            if(res1 == 1)
+            {
+                if([remote.errorMsg containsString:@"not connect"])
+                {
+                    [msg displayMessage:@"Could not establish connection to server.. Please try again later."];
+                }
+                else
+                {
+                    [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
+                }
+            }
+            else if(res1 == 2)
+            {
+                //Receive the timings as dict and store in array
+                NSMutableArray *hoursArray = remote.jsonData;
+                
+                NSDictionary *itemDict = [hoursArray objectAtIndex:0];
+                
+                txtFldOpenTime.text = [itemDict objectForKey:@"open_time"];
+                txtFldCloseTime.text = [itemDict objectForKey:@"close_time"];
+                txtFldStatus.text = ([[itemDict objectForKey:@"is_open"] isEqualToString:@"open"])?@"open":@"close";
+
+            }
         }
     }
-    else if(res1 == 2)
+    else
     {
-        //Receive the timings as dict and store in array
-        NSMutableArray *hoursArray = remote.jsonData;
-        
-        NSDictionary *itemDict = [hoursArray objectAtIndex:0];
-        
-        txtFldOpenTime.text = [itemDict objectForKey:@"open_time"];
-        txtFldCloseTime.text = [itemDict objectForKey:@"close_time"];
-        txtFldStatus.text = ([[itemDict objectForKey:@"is_open"] isEqualToString:@"open"])?@"open":@"close";
-
-    }
+        [msg displayMessage:@"Please select a location.."];
     }
 }
 
@@ -146,7 +152,13 @@ _btnMenu.action=@selector(revealToggle:);
 
 - (BOOL)validateString:(NSString *)string
 {
-    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)" options:NSRegularExpressionCaseInsensitive error:NULL];
+    //Other Time validation regex
+    //(1[01]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)
+    // \\d{2}:\\d{2}(am|pm)
+    // (0|1)[0-9]:[0-5][0-9](am|pm)
+    // (0[1-9]|1[0-9]|2[])(:[0-5][0-9])(am|pm)
+    
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:@"([01]?[0-9]|2[0-3]):[0-5][0-9]" options:NSRegularExpressionCaseInsensitive error:NULL];
     NSTextCheckingResult *match = [regExp firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
     
     if(!match)
@@ -163,6 +175,13 @@ _btnMenu.action=@selector(revealToggle:);
     NSString *day = [self.downPickerDay text];
     NSString *status = [self.downPickerStatus text];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"hh:mma";
+    NSDate *openTime= [dateFormatter dateFromString:txtFldOpenTime.text];
+    NSDate *closeTime = [dateFormatter dateFromString:txtFldCloseTime.text];
+    NSComparisonResult compareTimeResult = [openTime compare:closeTime];
+
+    
     if ([loc isEqualToString:@""])
     {
         [msg displayMessage:@"Please select a location..."];
@@ -178,6 +197,14 @@ _btnMenu.action=@selector(revealToggle:);
     else if (![self validateString:txtFldCloseTime.text])
     {
         [msg displayMessage:@"Please enter a valid shop open time...hh:mm am|pm"];
+    }
+    else if(compareTimeResult == NSOrderedDescending)
+    {
+        [msg displayMessage:@"Open Time should be less than Close Time"];
+    }
+    else if(compareTimeResult == NSOrderedSame)
+    {
+        [msg displayMessage:@"Open and Close Time cannot be same"];
     }
     else if ([status isEqualToString:@""])
     {
@@ -214,7 +241,7 @@ _btnMenu.action=@selector(revealToggle:);
             }
             else
             {
-                [msg displayMessage:[@"Error Occured: " stringByAppendingString:remote.errorMsg.description]];
+                [msg displayMessage:[@"Error Occured: " stringByAppendingString:@"Some Error occured with the application. Please try again..."]];
             }
         }
         else
